@@ -115,6 +115,8 @@
                     <a href="#championship-stats-page">冠軍條狀圖</a>
                     <a href="#international-history-page">國際賽沿革</a>
                     <a href="#draft-history-page">歷年選秀</a>
+                    <a href="#winter-league-history-page">冬盟沿革</a>
+                    <a href="#amateur-baseball-history-page">業餘棒球沿革</a>
                 </nav>
                 <div class="history-page-view" id="team-history-page">
                 <div class="history-heading">
@@ -278,7 +280,7 @@
                         <div><p class="section-kicker">CPBL DRAFT HISTORY</p><h3 id="draft-history-title">歷年選秀名單</h3></div>
                         <a class="draft-source-link" href="https://zh.wikipedia.org/wiki/中華職棒選秀會" target="_blank" rel="noopener noreferrer">資料來源：中華職棒選秀會 ↗</a>
                     </div>
-                    <p class="draft-intro">依年度、選秀場次和球隊整理各輪指名；包含優先指定、放棄及擴編選秀等紀錄。</p>
+                    <p class="draft-intro">依年度、選秀場次和球隊整理指名並列出特考名單；台鋼加選列在該輪最後順位。只有全隊放棄才代表該場選秀結束。</p>
                     <div class="draft-filters">
                         <label for="draft-year-filter">年度
                             <select id="draft-year-filter"><option value="all">所有年度</option></select>
@@ -293,6 +295,33 @@
                     <p class="draft-history-status" id="draft-history-status" role="status" aria-live="polite">正在載入歷年選秀名單……</p>
                     <div class="draft-year-list" id="draft-year-list"></div>
                     <button class="draft-retry-button" id="draft-retry" type="button" hidden>重新載入</button>
+                </section>
+                <section class="history-page-view supplemental-history-page" id="winter-league-history-page" aria-labelledby="winter-league-history-title" hidden>
+                    <div class="supplemental-history-heading">
+                        <div><p class="section-kicker">WINTER LEAGUE TIMELINE</p><h3 id="winter-league-history-title">冬盟沿革</h3></div>
+                        <a class="supplemental-history-source" href="https://awb.cpbl.com.tw/teamhistory" target="_blank" rel="noopener noreferrer">資料來源：亞洲冬季棒球聯盟官方沿革 ↗</a>
+                    </div>
+                    <p class="supplemental-history-intro">依年度排列冬季聯盟的參賽隊伍；相同隊伍或參賽脈絡固定在同一直欄。點擊年度可查看例行賽戰績、總冠軍與全年第一。</p>
+                    <p class="supplemental-history-status" id="winter-league-history-status" role="status" aria-live="polite">準備冬盟沿革架構……</p>
+                    <div class="supplemental-history-table-wrap" tabindex="0" aria-label="冬盟沿革表，可左右捲動">
+                        <table class="supplemental-history-table" id="winter-league-history-table">
+                            <caption>冬盟各年度參賽隊伍與沿革</caption>
+                            <tbody id="winter-league-history-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="history-page-view supplemental-history-page" id="amateur-baseball-history-page" aria-labelledby="amateur-baseball-history-title" hidden>
+                    <div class="supplemental-history-heading">
+                        <div><p class="section-kicker">AMATEUR BASEBALL TIMELINE</p><h3 id="amateur-baseball-history-title">業餘棒球沿革</h3></div>
+                    </div>
+                    <p class="supplemental-history-intro">依年度排列業餘棒球的隊伍與賽事；各隊可固定在同一直欄，呈現跨年度沿革。資料維護於 <code>data/amateur-baseball-history-data.js</code>。</p>
+                    <p class="supplemental-history-status" id="amateur-baseball-history-status" role="status" aria-live="polite">準備業餘棒球沿革架構……</p>
+                    <div class="supplemental-history-table-wrap" tabindex="0" aria-label="業餘棒球沿革表，可左右捲動">
+                        <table class="supplemental-history-table" id="amateur-baseball-history-table">
+                            <caption>業餘棒球各年度隊伍、賽事與沿革</caption>
+                            <tbody id="amateur-baseball-history-body"></tbody>
+                        </table>
+                    </div>
                 </section>
             </section>
         </div>
@@ -416,12 +445,15 @@
     <script src="data/year-archive-data.js"></script>
     <script src="data/challenge-series-data.js"></script>
     <script src="data/international-history-data.js"></script>
+    <script src="data/winter-league-history-data.js"></script>
+    <script src="data/amateur-baseball-history-data.js"></script>
     <script src="data/team-history-data.js"></script>
     <script src="js/team-ui.js"></script>
     <script src="js/team-history.js"></script>
     <script src="js/profile-dialogs.js"></script>
     <script src="js/championship-charts.js"></script>
     <script src="js/international-history.js"></script>
+    <script src="js/supplemental-history.js"></script>
     <script src="js/draft-history.js"></script>
     <script src="js/championship-admin.js"></script>
     <script src="script.js"></script>
