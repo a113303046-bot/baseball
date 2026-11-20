@@ -6,6 +6,7 @@
 - `team-history.js`：球隊沿革表格的繪製與更新。
 - `profile-dialogs.js`：球隊簡介、單季資料與年度戰績視窗。
 - `championship-charts.js`：冠軍沿革統計圖與頁面導覽。
+- `draft-history.js`：讀取維基百科中華職棒選秀會資料並提供年度、球隊與球員搜尋；1997–1999 年標示為未舉辦選秀會。
 - `championship-admin.js`：冠軍資料管理功能。
 - `../script.js`：頁面啟動與公開的重新載入方法。
 
