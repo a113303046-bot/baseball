@@ -31,7 +31,8 @@ const amateurBaseballHistoryLaneByName = {
     '臺東綺麗珊瑚': 'taitung-coral',
     '綺麗珊瑚': 'taitung-coral',
     '台北興富發': 'taipei-hsinfu',
-    '安永鮮物': 'evertrust',
+    '安永鮮物': 'tung-yue',
+    '全越運動': 'tung-yue',
     '台南市': 'tainan-city',
     '屏東紅尾': 'pingtung-redtails',
     '列特博生技': 'litobio'

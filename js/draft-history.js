@@ -11,6 +11,8 @@ function initializeDraftHistory() {
 
     const articleUrl = 'https://zh.wikipedia.org/zh-tw/中華職棒選秀會';
     const specialExamYears = new Set([1997, 1998, 1999]);
+    const additionalPickYears = new Set([2019, 2020, 2022, 2023]);
+    const sevenColumnDraftYears = new Set([2022, 2023]);
     const specialExamListUrl = 'https://twbsball.dils.tku.edu.tw/index.php?title=%E7%89%B9%E8%80%83';
     const specialExamRosterSourceUrl = 'https://taiwanbaseball.pixnet.net/blog/posts/2013487458';
     const specialExamRosters = {
@@ -91,38 +93,37 @@ function initializeDraftHistory() {
             const headerCells = [...rows[headerRowIndex].cells];
             const teams = headerCells.slice(1).map(normalizedText);
             if (!teams.length || teams.some(name => !name)) return;
-            const teamsByName = new Map();
+            const primaryColumns = new Map();
             teams.forEach((name, index) => {
-                if (!teamsByName.has(name)) {
-                    teamsByName.set(name, { name, picks: [], passed: false, passRound: null, columns: [] });
-                }
-                teamsByName.get(name).columns.push(index);
+                if (!primaryColumns.has(name)) primaryColumns.set(name, index);
             });
-            const picksByTeam = [...teamsByName.values()];
-            const orderedPicks = [];
+            const picksByTeam = teams.map((name, column) => ({
+                name,
+                picks: [],
+                passed: false,
+                passRound: null
+            }));
+            const noRightColumns = new Set();
             rows.slice(headerRowIndex + 1).forEach(row => {
                 const cells = [...row.cells];
                 const round = normalizedText(cells[0]);
                 if (!round || /^(備註|注|落選名單)/.test(round)) return;
                 teams.forEach((teamName, column) => {
-                    const team = teamsByName.get(teamName);
-                    if (team.passed) return;
-                    const primaryColumn = team.columns[0];
+                    const team = picksByTeam[column];
+                    if (team.passed || noRightColumns.has(column)) return;
+                    const primaryColumn = primaryColumns.get(teamName);
                     const player = normalizedText(cells[column + 1]);
                     if (/^放棄(?:$|[\s\[［(（])/.test(player)) {
                         if (column === primaryColumn) {
                             team.passed = true;
                             team.passRound = round;
                         }
+                    } else if (player === '無權' && additionalPickYears.has(activeYear)
+                        && column !== primaryColumn) {
+                        team.picks.push({ round, player, unavailable: true });
+                        noRightColumns.add(column);
                     } else if (player && !/^(無權|[ＸXx]|[－—-])$/.test(player)) {
-                        team.picks.push({ round, player });
-                        orderedPicks.push({
-                            round,
-                            team: teamName,
-                            player,
-                            position: column + 1,
-                            extra: column !== primaryColumn
-                        });
+                        team.picks.push({ round, player, extra: column !== primaryColumn });
                     }
                 });
             });
@@ -131,8 +132,6 @@ function initializeDraftHistory() {
                 year: activeYear,
                 label: activeLabel,
                 teams: picksByTeam,
-                orderedPicks,
-                hasAdditionalPicks: picksByTeam.some(team => team.columns.length > 1),
                 draftEnded: picksByTeam.every(team => team.passed),
                 sourceUrl: articleUrl
             });
@@ -152,7 +151,6 @@ function initializeDraftHistory() {
                         year,
                         label: '特考名單',
                         teams,
-                        orderedPicks: [],
                         sourceUrl: specialExamRosterSourceUrl,
                         specialExamUrl: specialExamListUrl,
                         specialExam: true
@@ -282,7 +280,11 @@ function initializeDraftHistory() {
                     teamGrid.textContent = '來源條目有此年度標題，但未提供選秀表。';
                 } else {
                     teamGrid = document.createElement('div');
-                    teamGrid.className = 'draft-team-grid';
+                    const showAllSevenColumns = sevenColumnDraftYears.has(event.year)
+                        && event.teams.length === 7
+                        && selectedTeam === 'all'
+                        && !searchTerm;
+                    teamGrid.className = `draft-team-grid${showAllSevenColumns ? ' draft-team-grid-seven' : ''}`;
                     event.teams.forEach(team => teamGrid.appendChild(createTeamCard(team, searchTerm)));
                 }
                 if (event.specialExam) {
@@ -294,31 +296,6 @@ function initializeDraftHistory() {
                         ? '所有球隊皆已放棄，本場選秀結束。'
                         : '尚未記錄所有球隊放棄；僅在全隊放棄時視為選秀結束。';
                     eventSection.append(eventHeading, completion);
-                    const orderedPicks = event.hasAdditionalPicks ? event.orderedPicks.filter(pick =>
-                        (selectedTeam === 'all' || pick.team === selectedTeam)
-                        && (!searchTerm || pick.player.toLocaleLowerCase().includes(searchTerm))) : [];
-                    if (orderedPicks.length) {
-                        const order = document.createElement('section');
-                        order.className = 'draft-order';
-                        const orderHeading = document.createElement('h5');
-                        orderHeading.textContent = '逐輪指名順序';
-                        const orderList = document.createElement('ol');
-                        orderList.className = 'draft-order-list';
-                        orderedPicks.forEach(pick => {
-                            const item = document.createElement('li');
-                            if (pick.extra) item.className = 'is-extra-pick';
-                            const round = document.createElement('span');
-                            round.className = 'draft-pick-round';
-                            round.textContent = `${pick.round}・第 ${pick.position} 順位`;
-                            const selection = document.createElement('span');
-                            selection.className = 'draft-pick-player';
-                            selection.textContent = `${pick.team}：${pick.player}${pick.extra ? '（加選，本輪最後）' : ''}`;
-                            item.append(round, selection);
-                            orderList.appendChild(item);
-                        });
-                        order.append(orderHeading, orderList);
-                        eventSection.appendChild(order);
-                    }
                     eventSection.append(teamGrid);
                 } else {
                     eventSection.append(eventHeading, teamGrid);
@@ -347,7 +324,8 @@ function initializeDraftHistory() {
         });
         const listedEvents = draftEvents.filter(event => !event.missing);
         const selectionEventCount = listedEvents.filter(event => !event.specialExam).length;
-        const pickCount = listedEvents.reduce((total, event) => total + event.teams.reduce((teamTotal, team) => teamTotal + team.picks.length, 0), 0);
+        const pickCount = listedEvents.reduce((total, event) => total + event.teams.reduce((teamTotal, team) =>
+            teamTotal + team.picks.filter(pick => !pick.unavailable).length, 0), 0);
         const missingYearCount = draftEvents.filter(event => event.missing).length;
         const specialExamYearCount = draftEvents.filter(event => event.specialExam).length;
         status.textContent = `已整理 ${[...new Set(draftEvents.map(event => event.year))].length} 個年度、${selectionEventCount} 場選秀、${specialExamYearCount} 年特考名單與 ${pickCount} 筆球員紀錄${missingYearCount ? `；另有 ${missingYearCount} 個年度的來源條目未提供名單` : ''}。`;

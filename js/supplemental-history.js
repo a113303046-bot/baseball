@@ -119,6 +119,10 @@ function createSupplementalHistoryStackCell(entries, lane, laneId) {
 
 function initializeSupplementalHistoryPages() {
     const amateurHistoryColors = ['#e6e9df', '#e4e8e9', '#ffebec', '#c1ffe4', '#e9e4d7', '#f2e0e2', '#f2e4dc', '#e5e8ef', '#e5e7ed', '#e5eadc', '#ece0d5'];
+    const amateurHistoryLaneColors = {
+        '合作金庫': '#96b59a',
+        '台灣電力': '#88a6c1'
+    };
     const pages = [
         {
             data: winterLeagueHistoryData,
@@ -133,6 +137,7 @@ function initializeSupplementalHistoryPages() {
             data: amateurBaseballHistoryData,
             bodyId: 'amateur-baseball-history-body',
             statusId: 'amateur-baseball-history-status',
+            periodFilterId: 'amateur-baseball-period-filter',
             pageName: '業餘棒球',
             lanes: [],
             emptyLaneCount: 12,
@@ -140,13 +145,23 @@ function initializeSupplementalHistoryPages() {
         }
     ];
 
-    pages.forEach(({ data, bodyId, statusId, pageName, lanes: configuredLanes, emptyLaneCount, isWinterLeague }) => {
+    pages.forEach(({ data, bodyId, statusId, periodFilterId, pageName, lanes: configuredLanes, emptyLaneCount, isWinterLeague }) => {
         const body = document.getElementById(bodyId);
         const status = document.getElementById(statusId);
+        const periodFilter = periodFilterId ? document.getElementById(periodFilterId) : null;
         if (!body || !status) return;
 
+        const allYears = [...data].sort((a, b) => a.year - b.year);
+        const selectedPeriod = isWinterLeague ? null : (periodFilter?.value || 'recent');
+        const years = isWinterLeague
+            ? allYears
+            : allYears.filter(yearData => selectedPeriod === 'early'
+                ? yearData.year <= 2009
+                : yearData.year >= 2010);
         body.replaceChildren();
-        const years = [...data].sort((a, b) => a.year - b.year);
+        if (!isWinterLeague && periodFilter) {
+            periodFilter.onchange = initializeSupplementalHistoryPages;
+        }
         const laneMap = new Map(configuredLanes.map(lane => [lane.id, lane]));
         years.forEach(yearData => {
             yearData.entries.forEach(entry => {
@@ -156,7 +171,9 @@ function initializeSupplementalHistoryPages() {
                     laneMap.set(laneId, {
                         id: laneId,
                         label: entry.name,
-                        color: entry.color || (isWinterLeague ? undefined : amateurHistoryColors[laneMap.size % amateurHistoryColors.length])
+                        color: entry.color || (isWinterLeague
+                            ? undefined
+                            : amateurHistoryLaneColors[laneId] || amateurHistoryColors[laneMap.size % amateurHistoryColors.length])
                     });
                 }
             });
@@ -175,6 +192,44 @@ function initializeSupplementalHistoryPages() {
                 const [bLane] = lanes.splice(bLaneIndex, 1);
                 const aLaneIndex = lanes.findIndex(lane => lane.id === 'taipei-sports-a');
                 lanes.splice(aLaneIndex + 1, 0, bLane);
+            }
+            if (selectedPeriod === 'early') {
+                const cooperativeIndex = lanes.findIndex(lane => lane.id === '合作金庫');
+                const powerIndex = lanes.findIndex(lane => lane.id === '台灣電力');
+                if (cooperativeIndex > powerIndex && powerIndex >= 0) {
+                    const [cooperativeLane] = lanes.splice(cooperativeIndex, 1);
+                    lanes.splice(powerIndex, 0, cooperativeLane);
+                }
+            }
+            const armyLandIndex = lanes.findIndex(lane => lane.id === 'national-army-land');
+            const armyAirIndex = lanes.findIndex(lane => lane.id === 'national-army-air');
+            if (armyLandIndex >= 0 && armyAirIndex >= 0 && armyAirIndex !== armyLandIndex + 1) {
+                const [armyAirLane] = lanes.splice(armyAirIndex, 1);
+                const updatedArmyLandIndex = lanes.findIndex(lane => lane.id === 'national-army-land');
+                lanes.splice(updatedArmyLandIndex + 1, 0, armyAirLane);
+            }
+            if (selectedPeriod === 'recent') {
+                const preferredLaneOrder = [
+                    '合作金庫', '台灣電力',
+                    'national-army-land', 'national-army-air',
+                    'taipei-city', 'new-taipei-city', 'taoyuan-city', 'taichung-city',
+                    'tung-yue'
+                ];
+                const preferredLanes = preferredLaneOrder
+                    .map(laneId => lanes.find(lane => lane.id === laneId))
+                    .filter(Boolean);
+                const armyLandPosition = preferredLanes.findIndex(lane => lane.id === 'national-army-land');
+                if (armyLandPosition >= 0) {
+                    // Retain the historical gap so the national-team columns stay in their original positions.
+                    preferredLanes.splice(armyLandPosition, 0, {
+                        id: 'recent-gap-before-army',
+                        label: '前期保留欄'
+                    });
+                }
+                const preferredLaneIds = new Set(preferredLanes.map(lane => lane.id));
+                lanes.splice(0, lanes.length,
+                    ...preferredLanes,
+                    ...lanes.filter(lane => !preferredLaneIds.has(lane.id)));
             }
         }
         const table = body.closest('table');
@@ -195,7 +250,24 @@ function initializeSupplementalHistoryPages() {
             return;
         }
 
+        let activeAmateurPeriod = null;
         years.forEach(yearData => {
+            if (!isWinterLeague) {
+                const period = yearData.year <= 2009 ? 'early' : 'recent';
+                if (period !== activeAmateurPeriod) {
+                    const periodRow = document.createElement('tr');
+                    periodRow.className = 'supplemental-history-period-row';
+                    const periodHeading = document.createElement('th');
+                    periodHeading.scope = 'rowgroup';
+                    periodHeading.colSpan = lanes.length + 1;
+                    periodHeading.textContent = period === 'early'
+                        ? '前期｜截至 2009 年'
+                        : '近期｜2010 年起';
+                    periodRow.appendChild(periodHeading);
+                    body.appendChild(periodRow);
+                    activeAmateurPeriod = period;
+                }
+            }
             const row = document.createElement('tr');
             row.dataset.year = String(yearData.year);
 
@@ -257,9 +329,12 @@ function initializeSupplementalHistoryPages() {
         });
 
         const entryCount = years.reduce((total, year) => total + year.entries.filter(Boolean).length, 0);
-        status.textContent = isWinterLeague
-            ? `已整理 ${years.length} 個年度、${entryCount} 筆${pageName}沿革紀錄；可點擊年度查看戰績與年度標記。`
-            : `已整理 ${years.length} 個年度、${entryCount} 筆${pageName}沿革紀錄；各參賽脈絡沿固定直欄排列。`;
+        if (isWinterLeague) {
+            status.textContent = `已整理 ${years.length} 個年度、${entryCount} 筆${pageName}沿革紀錄；可點擊年度查看戰績與年度標記。`;
+        } else {
+            const periodLabel = selectedPeriod === 'early' ? '前期（截至 2009 年）' : '近期（2010 年起）';
+            status.textContent = `目前顯示${periodLabel}：${years.length} 個年度、${entryCount} 筆${pageName}沿革紀錄；各參賽脈絡沿固定直欄排列。`;
+        }
     });
 }
 
