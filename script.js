@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 生成動態表格
     renderTeamHistoryTable();
+    renderTeamHistoryTable('match-fixing-team-history-body', { showHonors: false });
     initializeTeamProfileDialog();
     initializeChampionGameDialog();
     initializeChampionConfetti();

@@ -1,5 +1,41 @@
-function renderTeamHistoryTable() {
-    const tableBody = document.getElementById('team-history-body');
+function createMatchFixingEventLink(year, teamName, eventRecord) {
+    const link = document.createElement('a');
+    const eventLabel = `${year} 年${eventRecord.name}`;
+    link.className = 'match-fixing-event-link';
+    link.href = eventRecord.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.title = `查看${eventLabel}`;
+    link.setAttribute('aria-label', `查看${eventLabel}資料（${getTeamDisplayName(teamName)}）`);
+
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('class', 'match-fixing-event-icon');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.setAttribute('focusable', 'false');
+    const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    triangle.setAttribute('d', 'M12 1.8 23 21H1L12 1.8Z');
+    triangle.setAttribute('fill', '#171717');
+    const exclamation = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    exclamation.setAttribute('d', 'M12 7v7');
+    exclamation.setAttribute('fill', 'none');
+    exclamation.setAttribute('stroke', '#fff');
+    exclamation.setAttribute('stroke-linecap', 'round');
+    exclamation.setAttribute('stroke-width', '2.2');
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', '12');
+    dot.setAttribute('cy', '17.3');
+    dot.setAttribute('r', '1.2');
+    dot.setAttribute('fill', '#fff');
+    icon.append(triangle, exclamation, dot);
+    link.appendChild(icon);
+    return link;
+}
+
+function renderTeamHistoryTable(bodyId = 'team-history-body', options = {}) {
+    const tableBody = document.getElementById(bodyId);
+    if (!tableBody) return;
+    const showHonors = options.showHonors !== false;
 
     tableBody.replaceChildren();
 
@@ -7,7 +43,7 @@ function renderTeamHistoryTable() {
         const row = document.createElement('tr');
         row.dataset.year = String(yearData.year);
 
-        const defaultChampionName = seasonChampionData[yearData.year]?.annual;
+        const defaultChampionName = showHonors ? seasonChampionData[yearData.year]?.annual : null;
         const champion = yearData.teams.find(team => team && team.name === defaultChampionName);
 
         // 年份欄位
@@ -64,7 +100,7 @@ function renderTeamHistoryTable() {
                 if (!spansCenteredLineage) {
                     teamCell.style.backgroundColor = getTeamBackgroundColor(team.name, team.color);
                 }
-                if (champion === team) {
+                if (showHonors && champion === team) {
                     teamCell.classList.add('champion-cell');
                 }
 
@@ -110,6 +146,13 @@ function renderTeamHistoryTable() {
                 teamNameDiv.textContent = getTeamDisplayName(team.name);
                 teamCell.appendChild(teamNameDiv);
 
+                if (bodyId === 'match-fixing-team-history-body') {
+                    const eventRecord = matchFixingTeamEvents[yearData.year];
+                    if (eventRecord?.teams.includes(team.name)) {
+                        teamCell.appendChild(createMatchFixingEventLink(yearData.year, team.name, eventRecord));
+                    }
+                }
+
                 const merger = teamMergerRelations.find(relation =>
                     relation.year === yearData.year && relation.successorName === team.name
                 );
@@ -117,8 +160,10 @@ function renderTeamHistoryTable() {
                     teamCell.classList.add('team-merger-successor-cell');
                 }
 
-                addSeasonChampionBadges(teamCell, yearData.year, team.name, champion?.name);
-                addChallengeSeriesMark(teamCell, yearData.year, team.name);
+                if (showHonors) {
+                    addSeasonChampionBadges(teamCell, yearData.year, team.name, champion?.name);
+                    addChallengeSeriesMark(teamCell, yearData.year, team.name);
+                }
 
                 // 新球隊標記
                 if (team.isNew) {
@@ -140,7 +185,7 @@ function renderTeamHistoryTable() {
 
         tableBody.appendChild(row);
     });
-    renderChampionshipCharts();
+    if (bodyId === 'team-history-body') renderChampionshipCharts();
 }
 
 function refreshRenderedChampionships() {

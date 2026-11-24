@@ -273,13 +273,13 @@ function getArchiveTeamProfile(year, teamName) {
 }
 
 function initializeSeasonProfileDialog() {
-    const tableBody = document.getElementById('team-history-body');
+    const tableBodies = document.querySelectorAll('#team-history-body, #match-fixing-team-history-body');
     const dialog = document.getElementById('season-profile-dialog');
     const content = document.getElementById('season-profile-content');
     const closeButton = document.getElementById('season-profile-close');
-    if (!tableBody || !dialog || !content || !closeButton) return;
+    if (!tableBodies.length || !dialog || !content || !closeButton) return;
 
-    tableBody.addEventListener('click', event => {
+    tableBodies.forEach(tableBody => tableBody.addEventListener('click', event => {
         if (!(event.target instanceof Element)) return;
         const trigger = event.target.closest('.team-season-profile-trigger');
         if (!trigger) return;
@@ -353,7 +353,7 @@ function initializeSeasonProfileDialog() {
         });
         content.append(kicker, seasonLine, heading, summary, facts, highlightsSection, sourceNav);
         dialog.showModal();
-    });
+    }));
     closeButton.addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', event => {
         if (event.target === dialog) dialog.close();
@@ -361,12 +361,12 @@ function initializeSeasonProfileDialog() {
 }
 
 function initializeYearArchiveDialog() {
-    const tableBody = document.getElementById('team-history-body');
+    const tableBodies = document.querySelectorAll('#team-history-body, #match-fixing-team-history-body');
     const winterTableBody = document.getElementById('winter-league-history-body');
     const dialog = document.getElementById('year-archive-dialog');
     const content = document.getElementById('year-archive-content');
     const closeButton = document.getElementById('year-archive-close');
-    if (!tableBody || !dialog || !content || !closeButton) return;
+    if (!tableBodies.length || !dialog || !content || !closeButton) return;
 
     const renderStandings = (title, rows, note = '') => {
         const section = document.createElement('section');
@@ -418,7 +418,7 @@ function initializeYearArchiveDialog() {
         return section;
     };
 
-    tableBody.addEventListener('click', event => {
+    tableBodies.forEach(tableBody => tableBody.addEventListener('click', event => {
         if (!(event.target instanceof Element)) return;
         const trigger = event.target.closest('.year-archive-trigger');
         if (!trigger) return;
@@ -476,7 +476,7 @@ function initializeYearArchiveDialog() {
         });
         content.append(kicker, heading, introTitle, intro, standings, sources);
         dialog.showModal();
-    });
+    }));
 
     winterTableBody?.addEventListener('click', event => {
         if (!(event.target instanceof Element)) return;

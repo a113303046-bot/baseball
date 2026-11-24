@@ -202,11 +202,11 @@ function initializeInternationalHistory() {
             const event = document.createElement('span');
             event.className = 'international-event-name';
             event.textContent = eventName;
-            label.appendChild(event);
             const result = document.createElement('span');
             result.className = 'international-event-result';
             appendEventResult(result, record.result);
             label.appendChild(result);
+            label.appendChild(event);
             if (record.result) label.setAttribute('aria-label', `${eventName}/${record.result}`);
             if (sourceUrl) {
                 label.href = sourceUrl;

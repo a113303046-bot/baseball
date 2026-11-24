@@ -207,56 +207,48 @@ function setActiveHistoryPage(pageId) {
     });
 
     const chartPageActive = activePageId === 'championship-stats-page';
-    const internationalPageActive = activePageId === 'international-history-page';
     const draftPageActive = activePageId === 'draft-history-page';
-    const winterLeaguePageActive = activePageId === 'winter-league-history-page';
-    const amateurBaseballPageActive = activePageId === 'amateur-baseball-history-page';
     const signedIn = typeof firebase !== 'undefined'
         && typeof firebase.auth === 'function'
         && Boolean(firebase.auth().currentUser);
     const pageTitle = document.getElementById('page-title');
     const pageSubtitle = document.getElementById('page-subtitle');
     const breadcrumbLabel = document.getElementById('breadcrumb-page-label');
-    const activePageTitle = chartPageActive
-        ? '冠軍條狀圖'
-        : internationalPageActive ? '國際賽成績沿革'
-            : draftPageActive ? '歷年選秀'
-                : winterLeaguePageActive ? '冬盟沿革'
-                    : amateurBaseballPageActive ? '業餘棒球沿革' : '球隊沿革';
+    const activePageTitle = {
+        'championship-stats-page': '冠軍條狀圖',
+        'attendance-history-page': '中職歷年票房',
+        'international-history-page': '國際賽成績沿革',
+        'draft-history-page': '歷年選秀',
+        'winter-league-history-page': '冬盟沿革',
+        'amateur-baseball-history-page': '業餘棒球沿革',
+        'match-fixing-history-page': '職棒假球事件沿革'
+    }[activePageId] || '球隊沿革';
     if (breadcrumbLabel) breadcrumbLabel.textContent = activePageTitle;
-    if (signedIn && pageTitle) pageTitle.textContent = chartPageActive
-        ? '冠軍統計'
-        : internationalPageActive ? '國際賽成績沿革'
-            : draftPageActive ? '歷年選秀'
-                : winterLeaguePageActive ? '冬盟沿革'
-                    : amateurBaseballPageActive ? '業餘棒球沿革' : '球隊沿革';
-    if (signedIn && pageSubtitle) pageSubtitle.textContent = chartPageActive
-        ? '以同一沿革直欄彙整球隊的年度總冠軍與半季冠軍紀錄。'
-        : internationalPageActive
-            ? '從 1969 年起，依代表隊層級瀏覽國際賽成績。'
-            : draftPageActive
-                ? '依年度、場次和球隊查閱中華職棒各輪選秀名單。'
-                : winterLeaguePageActive
-                    ? '依年度整理冬季聯盟參賽隊伍與沿革。'
-                    : amateurBaseballPageActive
-                        ? '依年度整理業餘棒球隊伍、賽事與沿革。'
-                        : '從草創到新世代，收藏每一支球隊的棒球記憶。';
+    if (signedIn && pageTitle) pageTitle.textContent = chartPageActive ? '冠軍統計' : activePageTitle;
+    if (signedIn && pageSubtitle) pageSubtitle.textContent = {
+        'championship-stats-page': '以同一沿革直欄彙整球隊的年度總冠軍與半季冠軍紀錄。',
+        'attendance-history-page': '依年度比較總觀眾人次與平均單場進場人數。',
+        'international-history-page': '從 1969 年起，依代表隊層級瀏覽國際賽成績。',
+        'draft-history-page': '依年度、場次和球隊查閱中華職棒各輪選秀名單。',
+        'winter-league-history-page': '依年度整理冬季聯盟參賽隊伍與沿革。',
+        'amateur-baseball-history-page': '依年度整理業餘棒球隊伍、賽事與沿革。',
+        'match-fixing-history-page': '依年份整理職棒假球事件、相關球隊與案件發展。'
+    }[activePageId] || '從草創到新世代，收藏每一支球隊的棒球記憶。';
     if (chartPageActive) renderChampionshipCharts();
     if (draftPageActive && typeof initializeDraftHistory === 'function') initializeDraftHistory();
+    if (activePageId === 'attendance-history-page' && typeof initializeAttendanceHistory === 'function') initializeAttendanceHistory();
 }
 
 function syncHistoryPageFromHash() {
-    const pageId = window.location.hash === '#championship-stats-page'
-        ? 'championship-stats-page'
-        : window.location.hash === '#international-history-page'
-            ? 'international-history-page'
-            : window.location.hash === '#draft-history-page'
-                ? 'draft-history-page'
-                : window.location.hash === '#winter-league-history-page'
-                    ? 'winter-league-history-page'
-                    : window.location.hash === '#amateur-baseball-history-page'
-                        ? 'amateur-baseball-history-page'
-                        : 'team-history-page';
-    setActiveHistoryPage(pageId);
+    const pageIdByHash = {
+        '#championship-stats-page': 'championship-stats-page',
+        '#attendance-history-page': 'attendance-history-page',
+        '#international-history-page': 'international-history-page',
+        '#draft-history-page': 'draft-history-page',
+        '#winter-league-history-page': 'winter-league-history-page',
+        '#amateur-baseball-history-page': 'amateur-baseball-history-page',
+        '#match-fixing-history-page': 'match-fixing-history-page'
+    };
+    setActiveHistoryPage(pageIdByHash[window.location.hash] || 'team-history-page');
 }
 
