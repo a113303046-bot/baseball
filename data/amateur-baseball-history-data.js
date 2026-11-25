@@ -38,6 +38,23 @@ const amateurBaseballHistoryLaneByName = {
     '列特博生技': 'litobio'
 };
 
+const amateurBaseballHistoryLogoByName = {
+    '合作金庫': 'amateurleague/合作金庫.jpeg',
+    '台灣電力': 'amateurleague/台電.png',
+    '桃園航空城': 'amateurleague/桃園.jpeg',
+    '桃園市': 'amateurleague/桃園.jpeg',
+    '綺麗珊瑚': 'amateurleague/竒麗珊瑚.jpeg',
+    '臺東綺麗珊瑚': 'amateurleague/竒麗珊瑚.jpeg',
+    '台北興富發': 'amateurleague/台北興富發.png',
+    '安永鮮物': 'amateurleague/安永鮮物.png',
+    '台南市': 'amateurleague/台南.png',
+    '台中': 'amateurleague/台中成棒隊jpg.jpg',
+    '新北禾聯': 'amateurleague/新北禾聯.png',
+    '屏東紅尾': 'amateurleague/屏東紅尾.jpeg',
+    '列特博生技': 'amateurleague/列特柏生技.png',
+    '台中台壽霸龍': 'amateurleague/臺中台壽霸龍.jpg'
+};
+
 function createAmateurBaseballHistoryYear(year, teams) {
     return {
         year,
@@ -46,6 +63,7 @@ function createAmateurBaseballHistoryYear(year, teams) {
             const lineageLane = lane || amateurBaseballHistoryLaneByName[name];
             return {
                 name,
+                ...(amateurBaseballHistoryLogoByName[name] ? { logo: amateurBaseballHistoryLogoByName[name] } : {}),
                 ...(lineageLane ? { lane: lineageLane } : {}),
                 ...(span ? { span } : {})
             };

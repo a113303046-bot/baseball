@@ -46,8 +46,15 @@ const cpblAttendanceHistoryNotes = [
 
 const cpblAttendanceHistoryEvents = [
     {
+        year: 1992,
+        title: '兄弟象開啟三連霸',
+        detail: '職棒前30來年最高峰',
+        source: 'https://www.cna.com.tw/news/aspt/201903110056.aspx',
+        sourceLabel: '中央社：中職邁向30年'
+    },
+    {
         year: 1997,
-        title: '黑鷹事件後衝擊',
+        title: '黑鷹事件與台灣大聯盟成立',
         detail: '場均較前一年減 55%',
         source: 'https://www.cna.com.tw/news/aspt/201903110056.aspx',
         sourceLabel: '中央社：中職邁向30年'
@@ -60,9 +67,37 @@ const cpblAttendanceHistoryEvents = [
         sourceLabel: '中央社：中職邁向30年'
     },
     {
+        year: 2002,
+        title: '2001世界盃季軍',
+        detail: '中華職棒"再出發"',
+        source: 'https://www.sportsv.net/articles/108821?page=2',
+        sourceLabel: '運動視界：'
+    },
+    {
+        year: 2003,
+        title: '兩聯盟合併',
+        detail: '終結6年惡鬥',
+        source: 'https://www.sportsv.net/articles/108821?page=2',
+        sourceLabel: '運動視界：'
+    },
+    {
+        year: 2008,
+        title: '黑米事件',
+        detail: '中職黑暗時期',
+        source: 'https://www.sportsv.net/articles/108821?page=2',
+        sourceLabel: '運動視界：'
+    },
+    {
+        year: 2010,
+        title: '黑象事件',
+        detail: '人氣王牌成為假球案主角',
+        source: 'https://www.sportsv.net/articles/108821?page=2',
+        sourceLabel: '運動視界：'
+    },
+    {
         year: 2013,
         title: '世界棒球經典賽',
-        detail: '賽後棒球關注回升',
+        detail: '曼尼旋風、賽後棒球關注回升',
         source: 'https://project.cna.com.tw/cards/20251008-cpblspectators/',
         sourceLabel: '中央社：中職場均觀眾破萬'
     },
@@ -84,6 +119,13 @@ const cpblAttendanceHistoryEvents = [
         year: 2024,
         title: '臺北大巨蛋啟用',
         detail: '全年觀眾人次創新高',
+        source: 'https://cpbl.com.tw/xmdoc/cont?SId=0O309863132957699842',
+        sourceLabel: 'CPBL：2024 球季回顧'
+    },
+    {
+        year: 2025,
+        title: '12強世界冠軍',
+        detail: '史無前例冠軍加持',
         source: 'https://cpbl.com.tw/xmdoc/cont?SId=0O309863132957699842',
         sourceLabel: 'CPBL：2024 球季回顧'
     }

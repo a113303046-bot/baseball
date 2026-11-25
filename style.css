@@ -988,7 +988,7 @@ body {
     .amateur-history-period-control { align-items: stretch; flex-direction: column; margin-right: 3px; margin-left: 3px; }
     .amateur-history-period-control select { width: 100%; }
     .supplemental-history-intro, .supplemental-history-status { margin-right: 3px; margin-left: 3px; }
-    .supplemental-history-table { min-width: max(1080px, calc(90px + var(--lineage-lane-count, 12) * 82px)); }
+    .supplemental-history-table { min-width: max(1052px, calc(66px + var(--lineage-lane-count, 12) * 76px)); }
     .supplemental-history-table th, .supplemental-history-table td { height: 162px; }
     .international-toolbar { flex-wrap: nowrap; margin-right: 3px; margin-left: 3px; }
     .international-scroll-button { flex: 0 0 32px; width: 32px; height: 32px; }
@@ -1000,7 +1000,7 @@ body {
     .chart-bar-track { grid-column: 1 / -1; grid-row: 2; }
     .admin-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
     .admin-champion-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .team-history-table { min-width: 1080px; }
+    .team-history-table { min-width: 1052px; }
     .team-history-table td, .team-history-table .team-cell { height: 162px; }
     .team-history-table .team-cell { padding-top: 13px; vertical-align: top; }
     .team-history-table .team-cell:not(.empty-cell)::before { top: 9px; width: 48px; height: 48px; }
@@ -1090,6 +1090,13 @@ body {
     .auth-dialog .auth-panel { padding: 58px 18px 20px; }
     .team-profile-content { padding: 58px 17px 20px; }
     .team-profile-content h3 { font-size: clamp(21px, 6vw, 27px); }
+    .attendance-chart.is-mobile-oriented { width: 420px; min-width: 420px; }
+    .attendance-line-chart.is-mobile-oriented { width: 440px; min-width: 440px; }
+    .team-history-table .year-cell { width: 62px; font-size: 13px; }
+    .team-history-table .team-cell { min-width: 76px; }
+    .team-history-table .year-archive-trigger { padding-right: 1px; padding-left: 1px; font-size: 12px; }
+    .supplemental-history-table .supplemental-history-year { width: 62px; padding-right: 3px; padding-left: 3px; font-size: 13px; }
+    .supplemental-history-table .supplemental-history-entry { min-width: 76px; }
 }
 
 @media (hover: none) and (pointer: coarse) {

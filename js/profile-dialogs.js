@@ -216,6 +216,10 @@ function hasArchiveTeamProfile(year, teamName) {
     return rows.some(row => row[0] === teamName);
 }
 
+function isUnitedLionsTeamName(teamName) {
+    return /^(統一獅|統一7-ELEVEn獅)\d*$/.test(teamName);
+}
+
 function getArchiveTeamProfile(year, teamName) {
     const archive = yearLeagueArchiveData[year];
     const isSingleSeason = Boolean(archive?.standings.singleSeason);
@@ -266,9 +270,16 @@ function getArchiveTeamProfile(year, teamName) {
         record: recordText,
         rank: rankText,
         distinction: distinctions.join('・') || '未取得季冠軍或年度總冠軍',
+        annualFocus: teamName === '中信兄弟'
+            ? brotherTeamAnnualFocusData[year]
+            : isUnitedLionsTeamName(teamName) ? unitedLionsAnnualFocusData[year] : undefined,
         summary: `${getTeamDisplayName(teamName)}本季例行賽取得${recordText}，勝率 ${winRate}、${rankText}${isSingleSeason ? '' : `；${halfSummary}`}。`,
         highlights,
-        sources: archive.sources
+        sources: teamName === '中信兄弟'
+            ? [...archive.sources, brotherTeamHistorySource]
+            : isUnitedLionsTeamName(teamName)
+                ? [...archive.sources, unitedLionsTeamHistorySource]
+                : archive.sources
     };
 }
 
@@ -287,8 +298,13 @@ function initializeSeasonProfileDialog() {
         const year = Number(trigger.dataset.year);
         const teamName = trigger.dataset.team;
         const season = teamSeasonProfileData[year];
-        const profile = season?.teams[teamName] || getArchiveTeamProfile(year, teamName);
-        if (!profile) return;
+        const seasonProfile = season?.teams[teamName];
+        const archiveProfile = getArchiveTeamProfile(year, teamName);
+        if (!seasonProfile && !archiveProfile) return;
+        const profile = { ...archiveProfile, ...seasonProfile };
+        const isBrotherTeam = /中信兄弟|兄弟象/.test(teamName);
+        const isLionsTeam = isUnitedLionsTeamName(teamName);
+        const hasAnnualFocus = Boolean(profile.annualFocus && (isBrotherTeam || isLionsTeam));
 
         content.replaceChildren();
         const kicker = document.createElement('p');
@@ -315,7 +331,7 @@ function initializeSeasonProfileDialog() {
         [
             ['例行賽戰績', profile.record],
             ['全年排名', profile.rank],
-            ['球季成果', profile.distinction]
+            [hasAnnualFocus ? '年度焦點' : '球季成果', hasAnnualFocus ? profile.annualFocus : profile.distinction]
         ].forEach(([label, value]) => {
             const fact = document.createElement('div');
             const strong = document.createElement('strong');
