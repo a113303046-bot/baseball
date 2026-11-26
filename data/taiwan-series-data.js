@@ -1,0 +1,45 @@
+// 台灣大賽歷年冠軍、系列賽成績與個人獎項。
+const taiwanSeriesData = {
+    1990: { champion: '味全龍', runnerUp: '三商虎', score: [4, 2], games: '○●○○●○', mvp: '洪正欽', outstanding: null, noOutstanding: '該年度未設優秀球員獎。' },
+    1991: { champion: '統一獅', runnerUp: '味全龍', score: [4, 3], games: '●○●○○●○', mvp: '羅敏卿', outstanding: null, noOutstanding: '該年度未設優秀球員獎。' },
+    1992: { champion: '兄弟象', noSeries: '未舉行台灣大賽；該年另舉行金冠軍挑戰賽。' },
+    1993: { champion: '兄弟象', runnerUp: '統一獅', score: [4, 2], games: '○○●○●○', mvp: '洪一中', outstanding: ['陳義信', '宋榮泰'] },
+    1994: { champion: '兄弟象', noSeries: '包辦上下半季冠軍，依當年賽制直接成為年度總冠軍，未舉行台灣大賽。' },
+    1995: { champion: '統一獅', noSeries: '包辦上下半季冠軍，依當年賽制直接成為年度總冠軍，未舉行台灣大賽。' },
+    1996: { champion: '統一獅', runnerUp: '味全龍', score: [4, 2], games: '○●○○●○', mvp: '郭進興', outstanding: ['宋榮泰', '黃文博'] },
+    1997: { champion: '味全龍', runnerUp: '時報鷹', score: [4, 2], games: '●●○○○○', mvp: '黃文博', outstanding: ['賈西', '馬力安'] },
+    1998: { champion: '味全龍', runnerUp: '興農牛', score: [4, 3], games: '○●○●●○○', mvp: '許聖杰', outstanding: ['黃煚隆', '楓康'] },
+    1999: { champion: '味全龍', runnerUp: '和信鯨', score: [4, 1], games: '○○○●○', mvp: '黃煚隆', outstanding: ['金德七', '何紀賢'] },
+    2000: { champion: '統一獅', runnerUp: '興農牛', score: [4, 3], games: '○●○○●●○', mvp: '羅敏卿', outstanding: ['陳琦豐', '勇壯'] },
+    2001: { champion: '兄弟象', runnerUp: '統一獅', score: [4, 3], games: '○●●●○○○', mvp: '養父鐵', outstanding: ['彭政閔', '王傳家'] },
+    2002: { champion: '兄弟象', runnerUp: '中信鯨', score: [4, 0], games: '☆○○○', mvp: '陳致遠', outstanding: ['中込伸', '童琮輝'], byeWins: 1 },
+    2003: { champion: '兄弟象', runnerUp: '興農牛', score: [4, 2], games: '○●○○●○', mvp: '陳致遠', outstanding: ['彭政閔', '曾華偉'] },
+    2004: { champion: '興農牛', runnerUp: '統一獅', score: [4, 3], games: '○○●●●○○', mvp: '陽建福', outstanding: ['飛勇', '林鴻遠'] },
+    2005: { champion: '興農牛', runnerUp: '誠泰Cobras', score: [4, 0], games: '○○○○', mvp: '葉君璋', outstanding: ['戰玉飛', '林英傑'] },
+    2006: { champion: 'La New熊', runnerUp: '統一獅', score: [4, 0], games: '○○○○', mvp: '陳金鋒', outstanding: ['魔銳', '林岳平'] },
+    2007: { champion: '統一獅', runnerUp: 'La New熊', score: [4, 3], games: '○○●○●●○', mvp: '費古洛', outstanding: ['劉芙豪', '陳金鋒'] },
+    2008: { champion: '統一7-ELEVEn獅', runnerUp: '兄弟象', score: [4, 3], games: '●○●○○●○', mvp: '海克曼', outstanding: ['潘威倫', '王金勇'] },
+    2009: { champion: '統一7-ELEVEn獅', runnerUp: '兄弟象', score: [4, 3], games: '○○●○●●○', mvp: '海克曼', outstanding: ['潘武雄', '彭政閔'] },
+    2010: { champion: '兄弟象', runnerUp: '興農牛', score: [4, 0], games: '○○○○', mvp: '麥格倫', outstanding: ['張正偉', '張建銘'] },
+    2011: { champion: '統一7-ELEVEn獅', runnerUp: 'Lamigo桃猿', score: [4, 1], games: '○○●○○', mvp: '王鏡銘', outstanding: ['張泰山', '林泓育'] },
+    2012: { champion: 'Lamigo桃猿', runnerUp: '統一7-ELEVEn獅', score: [4, 1], games: '○○●○○', mvp: '林智勝', outstanding: ['雷力', '潘威倫'] },
+    2013: { champion: '統一7-ELEVEn獅', runnerUp: '義大犀牛', score: [4, 0], games: '○○○○', mvp: '高國慶', outstanding: ['坎諾', '鄭達鴻'] },
+    2014: { champion: 'Lamigo桃猿', runnerUp: '中信兄弟', score: [4, 1], games: '○○○●○', mvp: '余德龍', outstanding: ['藍寅倫', '林煜清'] },
+    2015: { champion: 'Lamigo桃猿', runnerUp: '中信兄弟', score: [4, 3], games: '○●●●○○○', mvp: '林智勝', outstanding: ['王柏融', '張正偉'] },
+    2016: { champion: '義大犀牛', runnerUp: '中信兄弟', score: [4, 2], games: '●●○○○○', mvp: '林哲瑄', outstanding: ['林威廷', '彭政閔'] },
+    2017: { champion: 'Lamigo桃猿', runnerUp: '中信兄弟', score: [4, 1], games: '☆●○○○', mvp: '陳俊秀', outstanding: ['林承飛', '張志豪'], byeWins: 1 },
+    2018: { champion: 'Lamigo桃猿', runnerUp: '統一7-ELEVEn獅', score: [4, 2], games: '☆○●●○○', mvp: '陳俊秀', outstanding: ['林泓育', '蘇智傑'], byeWins: 1 },
+    2019: { champion: 'Lamigo桃猿', runnerUp: '中信兄弟', score: [4, 1], games: '○●○○○', mvp: '林立', outstanding: ['王躍霖', '張志豪'] },
+    2020: { champion: '統一7-ELEVEn獅', runnerUp: '中信兄弟', score: [4, 3], games: '○●●●○○○', mvp: '潘武雄', outstanding: ['布雷克', '江坤宇'] },
+    2021: { champion: '中信兄弟', runnerUp: '統一7-ELEVEn獅', score: [4, 0], games: '○○○○', mvp: '詹子賢', outstanding: ['德保拉', '林安可'] },
+    2022: { champion: '中信兄弟', runnerUp: '樂天桃猿', score: [4, 0], games: '○○○○', mvp: '岳政華', outstanding: ['福來喜', '陳晨威'] },
+    2023: { champion: '味全龍', runnerUp: '樂天桃猿', score: [4, 3], games: '○●●○●○○', mvp: '徐若熙', outstanding: ['伍鐸', '朱育賢'] },
+    2024: { champion: '中信兄弟', runnerUp: '統一7-ELEVEn獅', score: [4, 1], games: '○●○○○', mvp: '曾頌恩', outstanding: ['德保拉', '林佳緯'] },
+    2025: { champion: '樂天桃猿', runnerUp: '中信兄弟', score: [4, 1], games: '○○●○○', mvp: '威能帝', outstanding: ['成晉', '韋禮加'] },
+    2026: { champion: '味全龍', runnerUp: '中信兄弟', score: [4, 2], games: '○○○●●○', mvp: '梅賽鍶', outstanding: ['張政禹', '勝騎士'] }
+};
+
+const taiwanSeriesSource = {
+    label: '維基百科｜台灣大賽歷年結果與個人獎項',
+    url: 'https://zh.wikipedia.org/zh-tw/%E5%8F%B0%E7%81%A3%E5%A4%A7%E8%B3%BD'
+};

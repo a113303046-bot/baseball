@@ -1,35 +1,53 @@
-function createMatchFixingEventLink(year, teamName, eventRecord) {
-    const link = document.createElement('a');
-    const eventLabel = `${year} 年${eventRecord.name}`;
-    link.className = 'match-fixing-event-link';
-    link.href = eventRecord.url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.title = `查看${eventLabel}`;
-    link.setAttribute('aria-label', `查看${eventLabel}資料（${getTeamDisplayName(teamName)}）`);
+function renderMatchFixingCaseCards() {
+    const list = document.getElementById('match-fixing-case-list');
+    if (!list || typeof matchFixingTeamEvents === 'undefined') return;
 
-    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    icon.setAttribute('class', 'match-fixing-event-icon');
-    icon.setAttribute('viewBox', '0 0 24 24');
-    icon.setAttribute('aria-hidden', 'true');
-    icon.setAttribute('focusable', 'false');
-    const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    triangle.setAttribute('d', 'M12 1.8 23 21H1L12 1.8Z');
-    triangle.setAttribute('fill', '#171717');
-    const exclamation = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    exclamation.setAttribute('d', 'M12 7v7');
-    exclamation.setAttribute('fill', 'none');
-    exclamation.setAttribute('stroke', '#fff');
-    exclamation.setAttribute('stroke-linecap', 'round');
-    exclamation.setAttribute('stroke-width', '2.2');
-    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    dot.setAttribute('cx', '12');
-    dot.setAttribute('cy', '17.3');
-    dot.setAttribute('r', '1.2');
-    dot.setAttribute('fill', '#fff');
-    icon.append(triangle, exclamation, dot);
-    link.appendChild(icon);
-    return link;
+    list.replaceChildren();
+    Object.entries(matchFixingTeamEvents)
+        .sort(([yearA], [yearB]) => Number(yearA) - Number(yearB))
+        .forEach(([year, eventRecord], index) => {
+            const item = document.createElement('li');
+            item.className = 'match-fixing-case-item';
+            const link = document.createElement('a');
+            link.className = 'match-fixing-case-card';
+            link.href = eventRecord.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            const number = document.createElement('span');
+            number.className = 'match-fixing-case-index';
+            number.textContent = String(index + 1).padStart(2, '0');
+            const yearLabel = document.createElement('span');
+            yearLabel.className = 'match-fixing-case-year';
+            yearLabel.textContent = year;
+            const title = document.createElement('strong');
+            title.className = 'match-fixing-case-name';
+            title.textContent = eventRecord.name;
+            const summary = document.createElement('span');
+            summary.className = 'match-fixing-case-summary';
+            summary.textContent = eventRecord.summary || '';
+            const development = document.createElement('span');
+            development.className = 'match-fixing-case-development';
+            const developmentLabel = document.createElement('strong');
+            developmentLabel.textContent = '案件脈絡';
+            const developmentText = document.createElement('span');
+            developmentText.textContent = eventRecord.development || '';
+            development.append(developmentLabel, developmentText);
+            const teamLabel = document.createElement('span');
+            teamLabel.className = 'match-fixing-case-team';
+            const teamCaption = document.createElement('span');
+            teamCaption.textContent = '相關球隊';
+            const teamNames = document.createElement('span');
+            teamNames.textContent = eventRecord.teams.join('、');
+            teamLabel.append(teamCaption, teamNames);
+            const arrow = document.createElement('span');
+            arrow.className = 'match-fixing-case-arrow';
+            arrow.setAttribute('aria-hidden', 'true');
+            arrow.textContent = '↗';
+
+            link.append(number, yearLabel, title, summary, development, teamLabel, arrow);
+            item.appendChild(link);
+            list.appendChild(item);
+        });
 }
 
 function renderTeamHistoryTable(bodyId = 'team-history-body', options = {}) {
@@ -145,13 +163,6 @@ function renderTeamHistoryTable(bodyId = 'team-history-body', options = {}) {
                 teamNameDiv.className = 'team-name';
                 teamNameDiv.textContent = getTeamDisplayName(team.name);
                 teamCell.appendChild(teamNameDiv);
-
-                if (bodyId === 'match-fixing-team-history-body') {
-                    const eventRecord = matchFixingTeamEvents[yearData.year];
-                    if (eventRecord?.teams.includes(team.name)) {
-                        teamCell.appendChild(createMatchFixingEventLink(yearData.year, team.name, eventRecord));
-                    }
-                }
 
                 const merger = teamMergerRelations.find(relation =>
                     relation.year === yearData.year && relation.successorName === team.name

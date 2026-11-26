@@ -20,26 +20,32 @@ function getTeamBadgeGroup(cell) {
     return badgeGroup;
 }
 
-function addSeasonChampionBadges(cell, year, teamName, annualChampionName, supplementalLeague = false) {
+function addSeasonChampionBadges(cell, year, teamName, annualChampionName, supplementalLeague = false, amateurChampionName = null, amateurChampionRecord = null) {
+    const amateurHistory = amateurChampionRecord !== null;
     const winterSeason = supplementalLeague ? winterLeagueYearStandingsData?.[year] : null;
-    const record = supplementalLeague ? null : seasonChampionData[year];
-    const tmlChampion = supplementalLeague ? null : tmlYearStandingsData[year]?.champion;
-    const fullSeasonLeaders = [
+    const record = supplementalLeague || amateurHistory ? null : seasonChampionData[year];
+    const tmlChampion = supplementalLeague || amateurHistory ? null : tmlYearStandingsData[year]?.champion;
+    const fullSeasonLeaders = amateurHistory ? [] : [
         yearLeagueArchiveData[year]?.standings?.annual?.[0]?.[0],
         tmlYearStandingsData[year]?.rows?.[0]?.[0],
         record?.singleSeason,
         winterSeason?.completed ? winterSeason.leader : null
     ];
-    if (!record && !winterSeason && tmlChampion !== teamName && !fullSeasonLeaders.includes(teamName)) return;
+    const isAmateurChampion = amateurHistory && amateurChampionName === teamName;
+    if (!record && !winterSeason && tmlChampion !== teamName && !fullSeasonLeaders.includes(teamName) && !isAmateurChampion) return;
 
     const honors = [];
-    if (record?.firstHalf === teamName) honors.push(['first-half', '上', '上半季冠軍']);
-    if (record?.secondHalf === teamName) honors.push(['second-half', '下', '下半季冠軍']);
-    if (fullSeasonLeaders.includes(teamName)) honors.push(['full-season', '全', '全年戰績第一']);
-    if ((supplementalLeague ? winterSeason?.completed && winterSeason.champion : annualChampionName) === teamName) {
-        honors.push(['annual', '1', '年度總冠軍']);
+    if (amateurHistory) {
+        if (isAmateurChampion) honors.push(['annual', '1', '業餘棒球冠軍']);
+    } else {
+        if (record?.firstHalf === teamName) honors.push(['first-half', '上', '上半季冠軍']);
+        if (record?.secondHalf === teamName) honors.push(['second-half', '下', '下半季冠軍']);
+        if (fullSeasonLeaders.includes(teamName)) honors.push(['full-season', '全', '全年戰績第一']);
+        if ((supplementalLeague ? winterSeason?.completed && winterSeason.champion : annualChampionName) === teamName) {
+            honors.push(['annual', '1', '年度總冠軍']);
+        }
+        if (tmlChampion === teamName) honors.push(['tml', 'TML', '台灣大聯盟年度總冠軍']);
     }
-    if (tmlChampion === teamName) honors.push(['tml', 'TML', '台灣大聯盟年度總冠軍']);
     if (!honors.length) return;
 
     cell.classList.add('season-champion-cell');
@@ -48,6 +54,7 @@ function addSeasonChampionBadges(cell, year, teamName, annualChampionName, suppl
         const isFeaturedGame = Number(year) === 2026 && kind === 'second-half';
         const isHalfChampion = kind === 'first-half' || kind === 'second-half';
         const isAnnualChampion = kind === 'annual';
+        const isTaiwanSeriesChampion = isAnnualChampion && !supplementalLeague && !amateurHistory;
         const mark = document.createElement(isFeaturedGame || isHalfChampion || isAnnualChampion ? 'button' : 'span');
         mark.className = `champion-mark champion-mark-${kind}`;
         mark.title = title;
@@ -55,8 +62,23 @@ function addSeasonChampionBadges(cell, year, teamName, annualChampionName, suppl
         if (isAnnualChampion || isHalfChampion) {
             mark.type = 'button';
             mark.classList.add('champion-mark-confetti-trigger');
-            mark.setAttribute('aria-label', `${year} 年${getTeamDisplayName(teamName)}${title}，點擊拋彩帶`);
-            mark.title = `點擊拋下${title}彩帶`;
+            if (isTaiwanSeriesChampion) {
+                mark.classList.add('champion-series-trigger');
+                mark.dataset.year = String(year);
+                mark.setAttribute('aria-haspopup', 'dialog');
+                mark.setAttribute('aria-controls', 'taiwan-series-dialog');
+                mark.setAttribute('aria-label', `查看 ${year} 年台灣大賽比數與個人獎項`);
+                mark.title = `查看 ${year} 年台灣大賽比數與個人獎項`;
+            } else if (amateurHistory) {
+                const detail = amateurChampionRecord.dateRange
+                    ? `民國 ${amateurChampionRecord.rocYear} 年｜${amateurChampionRecord.dateRange}｜${amateurChampionRecord.venues}｜${amateurChampionRecord.games} 場`
+                    : `${year} 年`;
+                mark.setAttribute('aria-label', `${detail}｜冠軍：${teamName}，點擊拋彩帶`);
+                mark.title = `${detail}｜冠軍：${teamName}`;
+            } else {
+                mark.setAttribute('aria-label', `${year} 年${getTeamDisplayName(teamName)}${title}，點擊拋彩帶`);
+                mark.title = `點擊拋下${title}彩帶`;
+            }
         }
         if (isFeaturedGame) {
             mark.type = 'button';

@@ -64,6 +64,16 @@ const unitedLionsTeamHistorySource = {
     url: 'https://twbsball.dils.tku.edu.tw/index.php?title=%E7%B5%B1%E4%B8%807-ELEVEn%E7%8D%85%E9%9A%8A%E9%9A%8A%E5%8F%B2'
 };
 
+const fubonGuardiansTeamHistorySource = {
+    label: '台灣棒球維基館｜富邦悍將隊隊史',
+    url: 'https://twbsball.dils.tku.edu.tw/index.php?title=%E5%AF%8C%E9%82%A6%E6%82%8D%E5%B0%87%E9%9A%8A%E9%9A%8A%E5%8F%B2'
+};
+
+const sinonBullsTeamHistorySource = {
+    label: '台灣棒球維基館｜興農牛隊隊史',
+    url: 'https://twbsball.dils.tku.edu.tw/index.php?title=%E8%88%88%E8%BE%B2%E7%89%9B%E9%9A%8A%E9%9A%8A%E5%8F%B2'
+};
+
 // 2014–2016 與 2024–2026 球隊年度簡介；2017–2023 的個別球隊簡介另於下方補上。
 const teamSeasonProfileData = {
     2014: {
@@ -120,9 +130,9 @@ const teamSeasonProfileData = {
                 sources: [{ label: 'CPBL 2024 年度頒獎報導', url: 'https://cpbl.com.tw/xmdoc/cont?sid=0O309863132957699842' }]
             },
             '富邦悍將': {
-                heading: '例行賽後段拚戰，全年排名第五', record: '53 勝・66 敗・1 和', rank: '全年第 5 名', distinction: '未取得季後賽資格',
-                summary: '富邦悍將以全年第五名結束球季。選秀狀元張育成季中返台加入，47 場出賽擊出 10 支全壘打，成為打線焦點。',
-                highlights: ['全年共拿下 53 勝，較前一季增加 5 勝。', '張育成在 47 場比賽敲出 10 轟、30 分打點。', '下半季戰績較上半季回升，仍未能進入季後賽。'],
+                heading: '張育成季中返隊，全年排名第五', record: '53 勝・66 敗・1 和', rank: '全年第 5 名', distinction: '未取得季後賽資格',
+                summary: '富邦悍將以 53 勝 66 敗 1 和排名第 5，未能取得季後賽資格。張育成季中返台加入，出賽 47 場敲出 10 支全壘打，成為打線焦點。',
+                highlights: ['全年拿下 53 勝，較前一季增加 5 勝。', '張育成出賽 47 場，擊出 10 支全壘打、30 分打點。', '上下半季分居第四與第六，球隊仍未能重返季後賽。'],
                 sources: [{ label: 'CPBL 張育成個人成績', url: 'https://cpbl.com.tw/team/person?acnt=0000006888' }]
             },
             'Rakuten Monkeys': {
@@ -171,9 +181,9 @@ const teamSeasonProfileData = {
                 ]
             },
             '富邦悍將': {
-                heading: '全年排名第六，尋找重整方向', record: '46 勝・74 敗', rank: '全年第 6 名', distinction: '未取得季後賽資格',
-                summary: '富邦悍將以全年第六名結束球季，46 勝為六隊最低；球隊持續調整投打陣容，為下一季重建競爭力。',
-                highlights: ['全年勝率 .383，與第五名味全龍相差 9.5 場。', '球隊以六連勝結束球季，追平富邦接手後最長連勝紀錄。', '陳金鋒總教練表示，球季中的陣容輪替讓更多球員累積一軍經驗。'],
+                heading: '全年墊底，六連勝為球季收尾', record: '46 勝・74 敗', rank: '全年第 6 名', distinction: '未取得季後賽資格',
+                summary: '富邦悍將全年以 46 勝 74 敗、勝率 .383 排名第六，六隊中勝場最少。球隊以追平隊史紀錄的六連勝結束球季，總教練陳金鋒將年輕球員累積一軍經驗列為本季收穫。',
+                highlights: ['46 勝為富邦悍將成軍以來單季最低勝場數。', '最後六場比賽連勝，最終戰以 7：2 擊敗樂天桃猿。', '主場平均進場人數 10,653 人，較前一季成長約 45.8%。'],
                 sources: [{ label: '中央社：富邦悍將結束球季', url: 'https://www.cna.com.tw/news/aspt/202510040218.aspx' }]
             },
             'Rakuten Monkeys': {
@@ -223,9 +233,9 @@ const teamSeasonProfileData = {
                 sources: [{ label: '中央社：季後挑戰賽決勝戰', url: 'https://www.cna.com.tw/news/aspt/202610120306.aspx' }]
             },
             '富邦悍將': {
-                heading: '排名重返前三，投手戰力向上', record: '59 勝・61 敗', rank: '全年第 3 名', distinction: '暌違七年重返前三',
-                summary: '富邦悍將以全年第三名完成例行賽，是 2019 年後首度回到前三名。李東洺拿下生涯新高的單季 10 勝，展現本土輪值進步。',
-                highlights: ['全年拿下 59 勝，勝率 .492。', '李東洺首度達成單季 10 勝，入圍年度最佳進步獎。', '球隊仍未取得季後賽門票，將以這次排名作為重返競爭行列的基礎。'],
+                heading: '成軍十週年重返前三，全年排名第三', record: '59 勝・61 敗', rank: '全年第 3 名', distinction: '2019 年後首度全年前三',
+                summary: '富邦悍將以 59 勝 61 敗、勝率 .492 排名第三，是 2019 年後首度回到全年前三。球隊在例行賽最終戰以 6：1 擊敗樂天桃猿，保住第三名，但仍未取得季後賽資格。',
+                highlights: ['全年 59 勝，為 2019 年後最佳年度排名。', '李東洺拿下生涯新高的單季 10 勝，入圍年度最佳進步獎。', '例行賽最終戰以 6：1 擊敗樂天桃猿，確定以全年第三作收。'],
                 sources: [{ label: '中央社：2026 年度獎項入圍', url: 'https://www.cna.com.tw/news/aspt/202610270253.aspx' }]
             },
             'Rakuten Monkeys': {
@@ -249,6 +259,128 @@ const teamSeasonProfileData = {
         }
     }
 };
+
+// 1993–2012 興農牛隊史及其前身俊國熊、興農熊年度簡介。
+const sinonBullsArchiveProfiles = {
+    1993: {
+        teamName: '俊國熊', heading: '加入職棒首季，全年排名第四',
+        summary: '俊國熊於中華職棒擴編至六隊的 1993 年加入一軍，首個球季以 40 勝 47 敗 3 和、勝率 .460 排名第四，為興農牛隊史留下起點。',
+        highlights: ['全年 40 勝 47 敗 3 和，排名四隊第四。', '上、下半季分別取得 21 勝與 19 勝，兩個半季都排名第四。', '黃忠義等俊國熊時期球員成為後續興農球團的隊史傳承核心。']
+    },
+    1994: {
+        teamName: '俊國熊', heading: '戰績下滑，兩個半季都居末位',
+        summary: '俊國熊全年以 29 勝 59 敗 2 和作收，勝率 .330，排名六隊第六；上、下半季也都在聯盟末位。',
+        highlights: ['全年僅拿下 29 勝，排名第六。', '上半季 14 勝 31 敗、下半季 15 勝 28 敗 2 和，兩個半季皆排名第六。', '球隊仍以俊國熊隊名出賽，翌年迎來企業經營權的轉變。']
+    },
+    1995: {
+        teamName: '俊國熊', heading: '俊國熊最後一季，球團迎來興農入主',
+        summary: '俊國熊全年取得 40 勝 58 敗 2 和，排名第六。球季後母企業興農公司入主球團，球隊由俊國熊時期轉入興農經營。',
+        highlights: ['全年 40 勝 58 敗 2 和、勝率 .408，排名第六。', '上半季 19 勝 30 敗 1 和，下半季 21 勝 28 敗 1 和，兩個半季皆排名第六。', '興農公司取得球團股份，開啟接續的興農熊、興農牛隊史。']
+    },
+    1996: {
+        teamName: '興農熊', heading: '下半季改名興農牛，全年排名第六',
+        summary: '興農公司於 1995 年底取得俊國熊 55% 股權並改名興農熊，1996 年球季中再買下剩餘股權，下半季正式以興農牛隊名出賽。球隊全年以 28 勝 69 敗 3 和、勝率 .289 排名第六。',
+        highlights: ['全年 28 勝 69 敗 3 和，排名六隊第六。', '上半季 14 勝 36 敗、下半季 14 勝 33 敗 3 和，兩個半季皆排名第六。', '下半季隊名正式改為興農牛，興農牛隊史由此展開。']
+    },
+    1997: {
+        teamName: '興農牛', heading: '與道奇隊合作，全年排名第五',
+        summary: '興農牛全年拿下 45 勝 48 敗 3 和、排名第五。球團與美國職棒洛杉磯道奇隊建立合作關係，展開技術交流。',
+        highlights: ['全年勝率 .484，排名六隊第五。', '上半季 20 勝 26 敗 2 和排名第五，下半季 25 勝 22 敗 1 和升至第三。', '球團與洛杉磯道奇隊建立合作關係，作為球隊發展的一項新方向。']
+    },
+    1998: {
+        teamName: '興農牛', heading: '單一球季排名第一，總冠軍賽惜敗',
+        summary: '興農牛在單一球季制的例行賽拿下 58 勝 45 敗 2 和、排名第一，首度以例行賽冠軍身分爭奪年度總冠軍，總冠軍賽以 3 勝 4 敗不敵味全龍。',
+        highlights: ['例行賽 58 勝 45 敗 2 和、勝率 .563，排名六隊第一。', '王俊郎帶隊拿下單一球季例行賽冠軍。', '總冠軍賽與味全龍戰至第七場，以 3 勝 4 敗落敗。']
+    },
+    1999: {
+        teamName: '興農牛', heading: '戰績落至末位，全年排名第六',
+        summary: '興農牛全年以 30 勝 61 敗 2 和、勝率 .330 排名第六，未能延續前一季的競爭力。當年各隊實際例行賽場次不一，興農出賽 93 場。',
+        highlights: ['全年 30 勝 61 敗 2 和，排名六隊第六。', '93 場例行賽拿下 30 勝，勝率 .330。', '未能取得單一球季前段排名，球季結束後回到上下半季賽制。']
+    },
+    2000: {
+        teamName: '興農牛', heading: '奪下上半季冠軍，總冠軍賽七戰惜敗',
+        summary: '興農牛以 27 勝 17 敗 1 和拿下上半季冠軍，全年 51 勝排名第一，闖進台灣大賽後與統一獅鏖戰七場，最終以 3 勝 4 敗落敗。',
+        highlights: ['上半季 27 勝 17 敗 1 和封王，全年 51 勝 38 敗 1 和排名第一。', '總冠軍賽與統一獅打滿七場，最終以 3 勝 4 敗屈居亞軍。', '這是興農牛隊史第二度打進總冠軍賽。']
+    },
+    2001: {
+        teamName: '興農牛', heading: '例行賽排名第四，未能延續爭冠',
+        summary: '興農牛全年以 34 勝 51 敗 5 和、勝率 .400 排名第四，上、下半季都以第四名作收，未取得季冠軍。',
+        highlights: ['全年 34 勝 51 敗 5 和，排名四隊第四。', '上半季 17 勝 25 敗 3 和、下半季 17 勝 26 敗 2 和，兩個半季皆排名第四。', '本季未取得季冠軍或台灣大賽資格。']
+    },
+    2002: {
+        teamName: '興農牛', heading: '全年排名第三，蔡仲南加盟成焦點',
+        summary: '興農牛全年取得 44 勝 45 敗 1 和、排名第三。球季前以高額簽約金簽下投手蔡仲南，成為球隊補強與新人焦點。',
+        highlights: ['全年勝率 .494，排名四隊第三。', '上、下半季各排名第三，全年戰績接近五成。', '蔡仲南加盟受到關注，並在新秀球季獲得年度新人王。']
+    },
+    2003: {
+        teamName: '興農牛', heading: '封王上半季，總冠軍賽不敵兄弟',
+        summary: '興農牛上半季以 34 勝 15 敗 1 和封王，全年拿下 62 勝排名第二，取得台灣大賽門票；系列賽以 2 勝 4 敗不敵兄弟象。',
+        highlights: ['上半季以 34 勝 15 敗 1 和拿下季冠軍。', '全年 62 勝 32 敗 6 和、勝率 .660，排名第二。', '台灣大賽以 2 勝 4 敗落敗，年度總冠軍由兄弟象獲得。']
+    },
+    2004: {
+        teamName: '興農牛', heading: '首度登頂，拿下隊史第一座總冠軍',
+        summary: '興農牛下半季封王後闖進台灣大賽，與統一獅鏖戰七場，以 4 勝 3 敗贏得隊史第一座年度總冠軍。',
+        highlights: ['下半季以 27 勝 21 敗 2 和奪得季冠軍。', '台灣大賽第六、七戰連勝逆轉系列賽，最終以 4 勝 3 敗擊敗統一獅。', '陽建福獲總冠軍賽 MVP，球隊首次捧起年度總冠軍獎盃。']
+    },
+    2005: {
+        teamName: '興農牛', heading: '直落四完成連霸，連續兩年封王',
+        summary: '興農牛以下半季冠軍身分進入台灣大賽，直落四擊敗誠泰 Cobras，完成隊史首度二連霸，並代表中職參加首屆亞洲職棒大賽。',
+        highlights: ['全年 53 勝 41 敗 6 和、勝率 .564，排名第一；下半季封王。', '台灣大賽以 4 勝 0 敗橫掃誠泰 Cobras，衛冕成功。', '葉君璋獲總冠軍賽 MVP；球隊在亞洲職棒大賽名列第三。']
+    },
+    2006: {
+        teamName: '興農牛', heading: '全年排名第三，季後挑戰賽止步',
+        summary: '興農牛全年以 48 勝 49 敗 3 和排名第三，取得季後挑戰賽資格；系列賽遭統一獅直落三淘汰，無緣挑戰三連霸。',
+        highlights: ['全年勝率 .495，排名六隊第三。', '季後挑戰賽以 0 勝 3 敗遭統一獅淘汰。', '未能連續第三年闖進台灣大賽，衛冕之路止於挑戰賽。']
+    },
+    2007: {
+        teamName: '興農牛', heading: '下半季陷入低潮，全年排名第六',
+        summary: '興農牛全年取得 42 勝 57 敗 1 和，排名六隊第六。下半季只拿下 18 勝，戰績明顯落後。',
+        highlights: ['全年勝率 .424，排名第六。', '上半季 24 勝 25 敗 1 和排名第四，下半季 18 勝 32 敗排名第五。', '未取得季冠軍或季後賽資格。']
+    },
+    2008: {
+        teamName: '興農牛', heading: '戰績持續下滑，全年排名墊底',
+        summary: '興農牛全年以 37 勝 62 敗 1 和、勝率 .374 排名第六，上、下半季都未能擺脫後段名次。',
+        highlights: ['全年 37 勝，排名六隊第六。', '上半季 19 勝 30 敗 1 和排名第六，下半季 18 勝 32 敗排名第五。', '球季中持續調整教練團與陣容，仍未能扭轉戰績。']
+    },
+    2009: {
+        teamName: '興農牛', heading: '回升至全年第三，重返中段競爭',
+        summary: '興農牛全年拿下 57 勝 60 敗 3 和，排名第三；上下半季都位居第三，戰績較前兩季回升。',
+        highlights: ['全年 57 勝 60 敗 3 和、勝率 .487，排名第三。', '上半季 29 勝 29 敗 2 和、下半季 28 勝 31 敗 1 和，兩個半季皆排名第三。', '全年勝率回升至接近五成，但未取得季冠軍。']
+    },
+    2010: {
+        teamName: '興農牛', heading: '上半季封王，總冠軍賽遭兄弟橫掃',
+        summary: '興農牛以上半季冠軍身分闖進台灣大賽，全年拿下 65 勝、排名第一，卻在總冠軍賽以 0 勝 4 敗不敵兄弟象。',
+        highlights: ['上半季以 36 勝 23 敗 1 和封王，全年 65 勝排名第一。', '下半季勝率未達五成，例行賽未能延續上半季強勢。', '台灣大賽遭兄弟象直落四淘汰，四場合計只得 4 分。']
+    },
+    2011: {
+        teamName: '興農牛', heading: '全本土陣容出賽，全年排名第四',
+        summary: '興農牛以全本土陣容打完整季，全年 45 勝 72 敗 3 和、排名第四；球隊未取得季後賽資格。',
+        highlights: ['成為中職首支以全本土陣容完成球季的球隊。', '上半季 20 勝 38 敗 2 和、下半季 25 勝 34 敗 1 和，兩個半季都排名第四。', '全年勝率 .385，戰績仍處於聯盟後段。']
+    },
+    2012: {
+        teamName: '興農牛', heading: '戰績墊底，球團宣布停止經營',
+        summary: '興農牛全年以 38 勝 77 敗 5 和、勝率 .330 排名最後。球團於球季結束時宣布停止經營並尋找接手企業，興農牛隊史告一段落。',
+        highlights: ['全年 38 勝 77 敗 5 和，四隊中排名第四。', '下半季僅拿下 16 勝，勝率 .276。', '10 月 22 日球團宣布停止經營、尋求企業接手，後續由義大犀牛接續球隊沿革。']
+    }
+};
+
+Object.entries(sinonBullsArchiveProfiles).forEach(([yearText, entry]) => {
+    const year = Number(yearText);
+    const { teamName, ...profile } = entry;
+    teamSeasonProfileData[year] = {
+        ...(teamSeasonProfileData[year] || {}),
+        teams: {
+            ...(teamSeasonProfileData[year]?.teams || {}),
+            [teamName]: {
+                ...profile,
+                sources: [sinonBullsTeamHistorySource, {
+                    label: 'NOWnews：興農牛隊史大事紀',
+                    url: 'https://n.yam.com/Article/20121023910416'
+                }, ...(profile.sources || [])]
+            }
+        }
+    };
+});
 
 // 中信兄弟可用的年度焦點，補充例行賽成績與冠軍資訊以外的隊史紀事。
 const brotherTeamAnnualFocusData = {
@@ -742,6 +874,130 @@ Object.entries(brotherElephantsSeasonNarratives).forEach(([yearText, profile]) =
                     label: `台灣棒球維基館｜兄弟象職棒${brotherElephantsChineseNumber(seasonNumber)}年`,
                     url: `https://twbsball.dils.tku.edu.tw/index.php?title=${encodeURIComponent(pageTitle)}`
                 }]
+            }
+        }
+    };
+});
+
+// 兄弟象與中信兄弟提供的年度口號，沿用年度簡介的 slogan 欄位呈現。
+const brotherTeamAnnualSloganData = {
+    1996: '把失去的找回來',
+    1997: '萬象更新，萬眾歸心',
+    2000: '公元兩千，兄弟領先',
+    2001: '世紀新兄弟',
+    2002: '兄弟同心，連霸冠軍',
+    2003: '邁象三連霸',
+    2004: '兄有成竹，弟造四連霸',
+    2005: '所象無敵，三造黃朝',
+    2006: '戰鼓驚天動地，稱霸天下唯我兄弟',
+    2007: '重現光輝，再造王朝/Think Yellow/黃潮澎湃',
+    2008: 'YELLOW POWER/YELLOW WINNER',
+    2009: '堅持',
+    2010: '從心開始/極‧戰力',
+    2011: '從心開始/極‧戰力',
+    2012: '從心開始',
+    2015: 'BROTHERS, ALWAYS TOGETHER',
+    2016: 'CHARGE 更強',
+    2017: 'Brothers we trust！',
+    2018: 'HONOR',
+    2019: 'CHIAllenge/BROTHERS GOT BALLS',
+    2020: 'CHASE',
+    2021: 'BRACE',
+    2022: 'RUN IT BACK',
+    2023: '黃潮',
+    2024: '進取',
+    2025: '進化',
+    2026: '奪還'
+};
+
+Object.entries(brotherTeamAnnualSloganData).forEach(([yearText, slogan]) => {
+    const year = Number(yearText);
+    const teamName = year <= 2013 ? '兄弟象' : '中信兄弟';
+    const profile = teamSeasonProfileData[year]?.teams[teamName];
+    if (profile) profile.slogan = slogan;
+});
+
+const unitedLionsAnnualSloganData = {
+    2017: 'NO FEAR',
+    2018: 'NO.1',
+    2019: 'PROUD',
+    2020: 'Team Lions',
+    2021: 'FLYING',
+    2022: '大勝獅吼Roar with Lions',
+    2023: 'LIONS UP，強勢來襲',
+    2024: 'ALWAYS LIONS',
+    2025: '尚勇',
+    2026: '鬥陣起行'
+};
+
+Object.entries(unitedLionsAnnualSloganData).forEach(([yearText, slogan]) => {
+    const profile = teamSeasonProfileData[Number(yearText)]?.teams['統一7-ELEVEn獅'];
+    if (profile) profile.slogan = slogan;
+});
+
+const fubonGuardiansArchiveProfiles = {
+    2017: {
+        heading: '富邦接手首季，全年排名第四',
+        summary: '富邦悍將以新隊名展開首個完整球季，全年拿下 48 勝 70 敗 2 和、排名第四。上半季戰績落後，下半季提升至 28 勝，球隊在新莊棒球場展開富邦悍將時期的主場篇章。',
+        highlights: ['首個完整球季以 48 勝 70 敗 2 和、勝率 .407 作收。', '上半季 20 勝 38 敗 2 和排名第四，下半季 28 勝 32 敗排名第三。', '球團以「Fire Up」作為首季年度口號，富邦悍將正式展開一軍隊史。']
+    },
+    2018: {
+        heading: '隊史首度闖進季後挑戰賽',
+        summary: '富邦悍將全年以 54 勝 66 敗排名第三，取得隊史首次季後挑戰賽資格。球隊與統一獅爭奪臺灣大賽門票，系列賽以 1 勝 3 敗止步。',
+        highlights: ['全年 54 勝 66 敗、勝率 .450，排名四隊第三。', '上、下半季皆為 27 勝 33 敗，分別排名第三與第四。', '季後挑戰賽首度登場，對統一獅拿下一勝後以 1 勝 3 敗落敗。']
+    },
+    2019: {
+        heading: '全年勝率並列最高，仍無緣季後賽',
+        summary: '富邦悍將全年取得 63 勝 55 敗 2 和，勝率 .534 與 Lamigo 桃猿並列聯盟最高；但兩個半季都排名第二，未能取得季冠軍，因此無緣臺灣大賽。',
+        highlights: ['上半季 31 勝 27 敗 2 和、下半季 32 勝 28 敗，兩個半季皆列第二。', '全年勝率 .534 與 Lamigo 桃猿並列最高，為富邦接手後最佳例行賽成績。', '當年賽制以半季冠軍決定季後賽席次，全年勝率第一仍未取得晉級資格。']
+    },
+    2020: {
+        heading: '下半季反彈居第二，全年排名第四',
+        summary: '富邦悍將上半季僅拿下 23 勝，排名第四；下半季回升至 31 勝 28 敗 1 和、排名第二，全年仍以 54 勝 65 敗 1 和排名第四。',
+        highlights: ['上半季 23 勝 37 敗，勝率 .383；下半季勝率提升至 .525。', '下半季以 31 勝 28 敗 1 和排名第二，直到最後仍有爭奪季冠軍的機會。', '全年 54 勝 65 敗 1 和，未取得季後賽資格。']
+    },
+    2021: {
+        heading: '五隊競爭，全年排名第四',
+        summary: '味全龍重返一軍，中職恢復五隊規模。富邦悍將上下半季都以第四名作收，全年取得 54 勝 62 敗 4 和，排名第四。',
+        highlights: ['上半季 28 勝 31 敗 1 和，下半季 26 勝 31 敗 3 和，兩個半季皆排名第四。', '全年 54 勝 62 敗 4 和、勝率 .466，在五隊中排名第四。', '球隊未取得季後賽資格，例行賽在新加入的一軍對手味全龍之上作收。']
+    },
+    2022: {
+        heading: '下半季強勢回升，全年仍居第五',
+        summary: '富邦悍將上半季只拿下 16 勝，排名第五；下半季回升至 30 勝 27 敗 3 和、排名第三。全年以 46 勝 70 敗 4 和排名第五，未能進入季後賽。',
+        highlights: ['上半季 16 勝 43 敗 1 和，勝率 .271；下半季勝率提升至 .526。', '下半季拿下 30 勝，較上半季多 14 勝，排名由第五升至第三。', '全年 46 勝 70 敗 4 和，在五隊中排名第五。']
+    },
+    2023: {
+        heading: '下半季戰績回升，全年排名第五',
+        summary: '富邦悍將上半季與下半季都排名第五，全年以 48 勝 67 敗 5 和排名第五。下半季勝率較上半季提高，但仍未能取得季後賽資格。',
+        highlights: ['上半季 21 勝 35 敗 4 和、勝率 .375，排名第五。', '下半季 27 勝 32 敗 1 和、勝率 .458，勝場比上半季增加 6 場。', '全年 48 勝 67 敗 5 和，連續兩年未能晉級季後賽。']
+    }
+};
+
+const fubonGuardiansAnnualSloganData = {
+    2017: 'Fire Up',
+    2018: 'Rising North',
+    2019: 'All Grit',
+    2020: "It's time",
+    2021: 'Fight On',
+    2022: 'We Will',
+    2023: 'All Blue',
+    2024: 'Go Stronger 夠悍',
+    2025: 'FIGHT FOR ALL 我要全部',
+    2026: 'BLUE POWER #不一樣了'
+};
+
+Object.entries(fubonGuardiansAnnualSloganData).forEach(([yearText, slogan]) => {
+    const year = Number(yearText);
+    const existingProfile = teamSeasonProfileData[year]?.teams['富邦悍將'] || {};
+    teamSeasonProfileData[year] = {
+        ...(teamSeasonProfileData[year] || {}),
+        teams: {
+            ...(teamSeasonProfileData[year]?.teams || {}),
+            '富邦悍將': {
+                ...existingProfile,
+                ...(fubonGuardiansArchiveProfiles[year] || {}),
+                slogan,
+                sources: [...(existingProfile.sources || []), fubonGuardiansTeamHistorySource]
             }
         }
     };

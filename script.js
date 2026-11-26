@@ -16,14 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('頁面切換時發生錯誤。', error);
         }
     });
+    historySectionScrollControls();
     window.addEventListener('hashchange', syncHistoryPageFromHash);
     window.addEventListener('popstate', syncHistoryPageFromHash);
 
     // 生成動態表格
     renderTeamHistoryTable();
-    renderTeamHistoryTable('match-fixing-team-history-body', { showHonors: false });
+    renderMatchFixingCaseCards();
     initializeTeamProfileDialog();
     initializeChampionGameDialog();
+    initializeTaiwanSeriesDialog();
     initializeChampionConfetti();
     initializeSeasonProfileDialog();
     initializeYearArchiveDialog();
@@ -41,6 +43,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('✓ 頁面初始化完成');
 });
+
+function historySectionScrollControls() {
+    document.querySelector('.match-fixing-history-page')?.addEventListener('click', event => {
+        if (!(event.target instanceof Element)) return;
+        const button = event.target.closest('button[data-scroll-target]');
+        if (!button) return;
+        const target = document.getElementById(button.dataset.scrollTarget);
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.focus({ preventScroll: true });
+    });
+}
 
 // 提供公開的重新加載隊徽方法（如果動態更新圖片）
 window.reloadTeamLogos = function() {

@@ -117,6 +117,20 @@ function createSupplementalHistoryStackCell(entries, lane, laneId) {
     return cell;
 }
 
+function addAmateurBaseballHistoryBadges(cell, year, teamName) {
+    const season = amateurBaseballChampionHistoryData.find(record => record.year === Number(year));
+    const normalizeName = name => String(name).replace(/臺/g, '台').replace(/[\s　]/g, '');
+    const normalizedTeamName = normalizeName(teamName);
+    const championName = season?.champions.find(name => {
+        const normalizedChampionName = normalizeName(name);
+        return normalizedTeamName === normalizedChampionName || normalizedTeamName.startsWith(normalizedChampionName);
+    });
+    if (!season || !championName) return;
+
+    addSeasonChampionBadges(cell, year, teamName, null, false, teamName, season);
+    cell.classList.add('champion-cell');
+}
+
 function initializeSupplementalHistoryPages() {
     const amateurHistoryColors = ['#e6e9df', '#e4e8e9', '#ffebec', '#c1ffe4', '#e9e4d7', '#f2e0e2', '#f2e4dc', '#e5e8ef', '#e5e7ed', '#e5eadc', '#ece0d5'];
     const amateurHistoryLaneColors = {
@@ -170,7 +184,9 @@ function initializeSupplementalHistoryPages() {
                 if (!laneMap.has(laneId)) {
                     laneMap.set(laneId, {
                         id: laneId,
-                        label: entry.name,
+                        label: laneId === 'taiwan-training-team'
+                            ? '大學培訓隊／中華培訓隊'
+                            : entry.name,
                         color: entry.color || (isWinterLeague
                             ? undefined
                             : amateurHistoryLaneColors[laneId] || amateurHistoryColors[laneMap.size % amateurHistoryColors.length])
@@ -230,6 +246,11 @@ function initializeSupplementalHistoryPages() {
                 lanes.splice(0, lanes.length,
                     ...preferredLanes,
                     ...lanes.filter(lane => !preferredLaneIds.has(lane.id)));
+            }
+            const trainingLaneIndex = lanes.findIndex(lane => lane.id === 'taiwan-training-team');
+            if (trainingLaneIndex >= 0 && trainingLaneIndex !== lanes.length - 1) {
+                const [trainingLane] = lanes.splice(trainingLaneIndex, 1);
+                lanes.push(trainingLane);
             }
         }
         const table = body.closest('table');
@@ -316,6 +337,7 @@ function initializeSupplementalHistoryPages() {
                     const span = Math.min(Math.max(1, Number(entry.span) || 1), lanes.length - laneIndex);
                     const cell = createSupplementalHistoryCell(entry, lane, lane.id, span);
                     if (isWinterLeague) addWinterLeagueHistoryBadges(cell, yearData.year, entry.name);
+                    else addAmateurBaseballHistoryBadges(cell, yearData.year, entry.name);
                     row.appendChild(cell);
                     laneIndex += span - 1;
                 } else {

@@ -232,7 +232,7 @@ function setActiveHistoryPage(pageId) {
         'draft-history-page': '依年度、場次和球隊查閱中華職棒各輪選秀名單。',
         'winter-league-history-page': '依年度整理冬季聯盟參賽隊伍與沿革。',
         'amateur-baseball-history-page': '依年度整理業餘棒球隊伍、賽事與沿革。',
-        'match-fixing-history-page': '依年份整理職棒假球事件、相關球隊與案件發展。'
+        'match-fixing-history-page': '沿著 1995 至 2009 年的事件年表，理解職棒誠信與信任的重量。'
     }[activePageId] || '從草創到新世代，收藏每一支球隊的棒球記憶。';
     if (chartPageActive) renderChampionshipCharts();
     if (draftPageActive && typeof initializeDraftHistory === 'function') initializeDraftHistory();

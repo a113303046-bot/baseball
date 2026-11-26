@@ -30,12 +30,14 @@ const amateurBaseballHistoryLaneByName = {
     '崇越隼鷹': 'tung-yue',
     '臺東綺麗珊瑚': 'taitung-coral',
     '綺麗珊瑚': 'taitung-coral',
-    '台北興富發': 'taipei-hsinfu',
+    '台北興富發': 'taipei-city',
     '安永鮮物': 'tung-yue',
     '全越運動': 'tung-yue',
     '台南市': 'tainan-city',
     '屏東紅尾': 'pingtung-redtails',
-    '列特博生技': 'litobio'
+    '列特博生技': 'litobio',
+    '大學培訓隊': 'taiwan-training-team',
+    '中華培訓隊': 'taiwan-training-team'
 };
 
 const amateurBaseballHistoryLogoByName = {
@@ -43,12 +45,15 @@ const amateurBaseballHistoryLogoByName = {
     '台灣電力': 'amateurleague/台電.png',
     '桃園航空城': 'amateurleague/桃園.jpeg',
     '桃園市': 'amateurleague/桃園.jpeg',
+    '台中威達超舜': 'amateurleague/威達超順.jpg',
+    '威達超舜': 'amateurleague/威達超順.jpg',
     '綺麗珊瑚': 'amateurleague/竒麗珊瑚.jpeg',
     '臺東綺麗珊瑚': 'amateurleague/竒麗珊瑚.jpeg',
     '台北興富發': 'amateurleague/台北興富發.png',
     '安永鮮物': 'amateurleague/安永鮮物.png',
     '台南市': 'amateurleague/台南.png',
     '台中': 'amateurleague/台中成棒隊jpg.jpg',
+    '台中運動家': 'amateurleague/臺中運動家.jpg',
     '新北禾聯': 'amateurleague/新北禾聯.png',
     '屏東紅尾': 'amateurleague/屏東紅尾.jpeg',
     '列特博生技': 'amateurleague/列特柏生技.png',
@@ -211,3 +216,55 @@ const amateurBaseballHistoryData = [
         ['合作金庫'], ['台北興富發'], ['全越運動'], ['台南市'], ['桃園市'], ['新北凱撒'], ['綺麗珊瑚'], ['台中台壽霸龍'], ['台灣電力'], ['屏東紅尾'], ['列特博生技']
     ])
 ];
+
+// 使用者提供的業餘棒球年度冠軍紀錄；民國年轉為西元年後，供沿革表顯示獎盃與賽事摘要。
+const amateurBaseballChampionHistoryData = [
+    [67, '09月28日–10月08日', '北市', 7, '合作金庫'],
+    [68, '09月08日–09月17日', '北市', 7, '台灣電力'],
+    [69, '09月18日–10月09日', '北市、南市', 8, '台灣電力'],
+    [70, '09月26日–10月10日', '北市', 7, '陸軍'],
+    [71, '10月02日–10月10日', '北市', 8, '陸軍'],
+    [72, '10月02日–10月09日', '北市', 8, '合作金庫、虎風'],
+    [73, '10月03日–10月16日', '北市', 8, '合作金庫'],
+    [74, '10月05日–10月15日', '北市、竹市、中市', 12, '味全'],
+    [75, '10月04日–10月15日', '北市', 11, '陸光'],
+    [76, '11月03日–11月18日', '北市、高市立德', 11, '兄弟'],
+    [77, '10月08日–10月23日', '北市、高市立德', 12, '兄弟'],
+    [78, '10月05日–10月22日', '北市、竹市', 13, '三商'],
+    [79, '10月14日–11月09日', '北市、中市', 7, '榮工'],
+    [80, '12月01日–12月25日', '北市、中市', 9, '時報鷹'],
+    [81, '11月04日–11月25日', '北市、中市', 8, '時報鷹'],
+    [82, '11月05日–11月30日', '北市', 9, '合作金庫'],
+    [83, '11月07日–11月25日', '北市', 9, '聲寶巨人'],
+    [84, '11月18日–11月29日', '北市', 10, '中信鯨'],
+    [85, '11月07日–11月19日', '北市', 8, '中信鯨'],
+    [86, '11月07日–11月18日', '北市', 9, '陸光'],
+    [87, '11月10日–11月24日', '北市、北縣新莊', 10, '台北體院'],
+    [88, '11月28日–12月04日', '北市', 10, '合作金庫'],
+    [89, '10月06日–10月12日', '北市', 10, '美孚巨人']
+].map(([rocYear, dateRange, venues, games, champion]) => {
+    const calendarYear = rocYear + 1911;
+    return {
+        rocYear,
+        year: calendarYear,
+        dateRange,
+        venues,
+        games,
+        champions: champion.split('、')
+    };
+}).concat([
+    [2014, '崇越隼鷹'],
+    [2017, '合作金庫'],
+    [2018, '合作金庫'],
+    [2019, '台北興富發'],
+    [2020, '合作金庫'],
+    [2021, '合作金庫'],
+    [2022, '合作金庫'],
+    [2023, '合作金庫'],
+    [2024, '台中台壽霸龍'],
+    [2025, '合作金庫']
+].map(([year, champion]) => ({
+    rocYear: year - 1911,
+    year,
+    champions: [champion]
+})));

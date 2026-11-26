@@ -41,6 +41,167 @@ function initializeChampionGameDialog() {
     });
 }
 
+function getTaiwanSeriesLogoKey(teamName, year) {
+    if (teamName === '統一獅' || teamName === '統一7-ELEVEn獅') {
+        if (year <= 1990) return '統一獅1';
+        if (year <= 1992) return '統一獅2';
+        if (year <= 2003) return '統一獅3';
+        if (year <= 2006) return '統一獅4';
+        if (year <= 2008) return '統一獅5';
+        return '統一7-ELEVEn獅';
+    }
+    if (teamName === '味全龍' && year <= 1999) return '味全龍1';
+    if (teamName === 'Lamigo桃猿' && year >= 2017) return 'Lamigo桃猿1';
+    if (teamName === 'La New熊' || teamName === 'LaNew熊') return 'LaNew 熊';
+    if (teamName === '樂天桃猿') return 'Rakuten Monkeys';
+    return teamName;
+}
+
+function createTaiwanSeriesTeamPanel(teamName, wins, label, year) {
+    const panel = document.createElement('div');
+    panel.className = `taiwan-series-team ${label === '冠軍' || label === '年度總冠軍' ? 'is-champion' : 'is-runner-up'}`;
+    const logoKey = getTaiwanSeriesLogoKey(teamName, year);
+    const logoPath = teamLogos[logoKey] || teamLogos[teamName];
+    if (logoPath) {
+        const logo = document.createElement('img');
+        logo.className = 'taiwan-series-team-logo';
+        logo.src = logoPath;
+        logo.alt = `${teamName}隊徽`;
+        logo.onerror = () => logo.remove();
+        panel.appendChild(logo);
+    }
+    const name = document.createElement('strong');
+    name.className = 'taiwan-series-team-name';
+    name.textContent = teamName;
+    const result = document.createElement('span');
+    result.className = 'taiwan-series-team-result';
+    result.textContent = wins === null ? label : `${wins} 勝・${label}`;
+    panel.append(name, result);
+    return panel;
+}
+
+function initializeTaiwanSeriesDialog() {
+    const tableBody = document.getElementById('team-history-body');
+    const dialog = document.getElementById('taiwan-series-dialog');
+    const content = document.getElementById('taiwan-series-content');
+    const closeButton = document.getElementById('taiwan-series-close');
+    if (!tableBody || !dialog || !content || !closeButton) return;
+
+    tableBody.addEventListener('click', event => {
+        if (!(event.target instanceof Element)) return;
+        const trigger = event.target.closest('.champion-series-trigger');
+        if (!trigger) return;
+        const year = Number(trigger.dataset.year);
+        const series = taiwanSeriesData[year];
+        if (!series) return;
+
+        content.replaceChildren();
+        const kicker = document.createElement('p');
+        kicker.className = 'section-kicker';
+        kicker.textContent = 'TAIWAN SERIES · CHAMPIONSHIP';
+        const season = document.createElement('p');
+        season.className = 'team-profile-season';
+        season.textContent = `中華職棒 ${year - 1989} 年｜台灣大賽`;
+        const title = document.createElement('h3');
+        title.id = 'taiwan-series-title';
+        title.textContent = `${year} 年台灣大賽`;
+        content.append(kicker, season, title);
+
+        if (series.noSeries) {
+            const champion = createTaiwanSeriesTeamPanel(series.champion, null, '年度總冠軍', year);
+            champion.classList.add('taiwan-series-auto-champion');
+            const note = document.createElement('p');
+            note.className = 'team-profile-summary taiwan-series-no-series';
+            note.textContent = `${series.noSeries}因此沒有總冠軍賽 MVP 或優秀球員獎項。`;
+            content.append(champion, note);
+        } else {
+            const matchup = document.createElement('div');
+            matchup.className = 'taiwan-series-matchup';
+            matchup.setAttribute('aria-label', '台灣大賽系列賽勝場比數');
+            matchup.append(
+                createTaiwanSeriesTeamPanel(series.champion, series.score[0], '冠軍', year)
+            );
+            const separator = document.createElement('span');
+            separator.className = 'taiwan-series-versus';
+            separator.textContent = '—';
+            separator.setAttribute('aria-hidden', 'true');
+            matchup.append(separator, createTaiwanSeriesTeamPanel(series.runnerUp, series.score[1], '亞軍', year));
+            content.appendChild(matchup);
+
+            if (series.byeWins) {
+                const byeNote = document.createElement('p');
+                byeNote.className = 'taiwan-series-bye-note';
+                byeNote.textContent = `冠軍隊含 ${series.byeWins} 場保送勝。`;
+                content.appendChild(byeNote);
+            }
+            if (series.games) {
+                const gameSequence = document.createElement('p');
+                gameSequence.className = 'taiwan-series-game-sequence';
+                gameSequence.textContent = `冠軍隊逐戰結果（○勝、●敗、☆保送勝）：${series.games}`;
+                content.appendChild(gameSequence);
+            }
+
+            const mvpSection = document.createElement('section');
+            mvpSection.className = 'taiwan-series-mvp';
+            const mvpLabel = document.createElement('span');
+            mvpLabel.textContent = '總冠軍賽 MVP';
+            const mvpName = document.createElement('strong');
+            mvpName.textContent = series.mvp || '未記錄';
+            mvpSection.append(mvpLabel, mvpName);
+            content.appendChild(mvpSection);
+
+            const awards = document.createElement('section');
+            awards.className = 'taiwan-series-awards';
+            const awardsHeading = document.createElement('h4');
+            awardsHeading.textContent = '優秀球員';
+            const awardCards = document.createElement('div');
+            awardCards.className = 'taiwan-series-award-cards';
+            [
+                ['勝隊優秀球員', series.champion, series.outstanding?.[0] || series.noOutstanding || '未記錄'],
+                ['敗隊優秀球員', series.runnerUp, series.outstanding?.[1] || series.noOutstanding || '未記錄']
+            ].forEach(([label, teamName, player]) => {
+                const card = document.createElement('div');
+                card.className = 'taiwan-series-award-card';
+                const team = document.createElement('span');
+                team.textContent = `${label}｜${teamName}`;
+                const playerName = document.createElement('strong');
+                playerName.textContent = player;
+                card.append(team, playerName);
+                awardCards.appendChild(card);
+            });
+            awards.append(awardsHeading, awardCards);
+            content.appendChild(awards);
+        }
+
+        const sources = document.createElement('nav');
+        sources.className = 'team-profile-sources';
+        sources.setAttribute('aria-label', '台灣大賽資料來源');
+        const sourceLabel = document.createElement('span');
+        sourceLabel.textContent = '資料來源';
+        const sourceLink = document.createElement('a');
+        sourceLink.href = taiwanSeriesSource.url;
+        sourceLink.target = '_blank';
+        sourceLink.rel = 'noopener noreferrer';
+        sourceLink.textContent = `${taiwanSeriesSource.label} ↗`;
+        sources.append(sourceLabel, sourceLink);
+        content.appendChild(sources);
+        dialog.showModal();
+        requestAnimationFrame(() => {
+            if (!dialog.open) return;
+            const dialogBounds = dialog.getBoundingClientRect();
+            const titleBounds = title.getBoundingClientRect();
+            launchChampionshipConfetti({
+                x: titleBounds.left + titleBounds.width / 2 - dialogBounds.left,
+                y: titleBounds.top + titleBounds.height / 2 - dialogBounds.top
+            }, series.champion, true, dialog);
+        });
+    });
+    closeButton.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+        if (event.target === dialog) dialog.close();
+    });
+}
+
 let championshipConfettiCanvas = null;
 let championshipConfettiFrame = null;
 let championshipConfettiResizeHandler = null;
@@ -197,7 +358,7 @@ function initializeChampionConfetti() {
         if (!(event.target instanceof Element)) return;
         const trigger = event.target.closest('.champion-mark-confetti-trigger');
         if (!trigger) return;
-        if (trigger.classList.contains('champion-mark-trigger')) return;
+        if (trigger.classList.contains('champion-mark-trigger') || trigger.classList.contains('champion-series-trigger')) return;
         const bounds = trigger.getBoundingClientRect();
         const teamName = trigger.closest('.team-cell')?.dataset.team;
         const isAnnualChampion = trigger.classList.contains('champion-mark-annual');
@@ -284,7 +445,7 @@ function getArchiveTeamProfile(year, teamName) {
 }
 
 function initializeSeasonProfileDialog() {
-    const tableBodies = document.querySelectorAll('#team-history-body, #match-fixing-team-history-body');
+    const tableBodies = document.querySelectorAll('#team-history-body');
     const dialog = document.getElementById('season-profile-dialog');
     const content = document.getElementById('season-profile-content');
     const closeButton = document.getElementById('season-profile-close');
@@ -377,7 +538,7 @@ function initializeSeasonProfileDialog() {
 }
 
 function initializeYearArchiveDialog() {
-    const tableBodies = document.querySelectorAll('#team-history-body, #match-fixing-team-history-body');
+    const tableBodies = document.querySelectorAll('#team-history-body');
     const winterTableBody = document.getElementById('winter-league-history-body');
     const dialog = document.getElementById('year-archive-dialog');
     const content = document.getElementById('year-archive-content');
@@ -458,6 +619,17 @@ function initializeYearArchiveDialog() {
         const intro = document.createElement('p');
         intro.className = 'team-profile-summary';
         intro.textContent = archive.overview;
+        const slogan = cpblAnnualSloganData[year];
+        let sloganSection = null;
+        if (slogan) {
+            sloganSection = document.createElement('section');
+            sloganSection.className = 'year-archive-slogan';
+            const sloganLabel = document.createElement('span');
+            sloganLabel.textContent = '中職年度口號';
+            const sloganText = document.createElement('strong');
+            sloganText.textContent = slogan;
+            sloganSection.append(sloganLabel, sloganText);
+        }
         const standings = document.createElement('div');
         standings.className = `year-archive-grid${tmlStandings ? ' has-tml' : ''}`;
         if (isSingleSeason) {
@@ -480,17 +652,20 @@ function initializeYearArchiveDialog() {
         sources.className = 'team-profile-sources';
         sources.setAttribute('aria-label', `${year} 年戰績來源`);
         const label = document.createElement('span');
-        label.textContent = '戰績來源';
+        label.textContent = slogan ? '戰績、口號來源' : '戰績來源';
         sources.appendChild(label);
-        [...archive.sources, ...(tmlStandings ? tmlYearStandingsSources : [])].forEach(source => {
-            const link = document.createElement('a');
-            link.href = source.url;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.textContent = `${source.label} ↗`;
-            sources.appendChild(link);
-        });
-        content.append(kicker, heading, introTitle, intro, standings, sources);
+        [...archive.sources, ...(tmlStandings ? tmlYearStandingsSources : []), ...(slogan ? [cpblAnnualSloganSource] : [])]
+            .forEach(source => {
+                const link = document.createElement('a');
+                link.href = source.url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = `${source.label} ↗`;
+                sources.appendChild(link);
+            });
+        content.append(kicker, heading);
+        if (sloganSection) content.appendChild(sloganSection);
+        content.append(introTitle, intro, standings, sources);
         dialog.showModal();
     }));
 

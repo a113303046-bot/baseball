@@ -3937,3 +3937,49 @@ const tmlYearStandingsSources = [
     { label: '高屏雷公年度紀錄', url: 'https://zh.wikipedia.org/wiki/高屏雷公' }
 ];
 
+// 使用者提供的中華職棒年度口號（1990–2026）。
+const cpblAnnualSloganData = {
+    1990: '清新健康',
+    1991: '逐夢踏實',
+    1992: '三年有禮',
+    1993: '職棒四年新朋友（龍獅虎象加鷹熊）',
+    1994: '邁向更高點',
+    1995: '生活棒球',
+    1996: '好運連連',
+    1997: '好球才過癮、球迷萬萬歲',
+    1998: '活力滿場、點子無限',
+    1999: '走過從前、邁向未來',
+    2000: 'on fire',
+    2001: '新世代的力量',
+    2002: '我愛中華',
+    2003: '夠意思（ＧＯ！棒拼世界）',
+    2004: '飛不停（棒球起飛、榮耀再現）',
+    2005: '就是愛棒球',
+    2006: '盡情看我',
+    2007: '盡情看我',
+    2008: '非我莫屬',
+    2009: '轉動20！WITH US！',
+    2010: '心棒球',
+    2011: '好球 Nice play',
+    2012: '再躍起！Jump!Jump!Jump!',
+    2013: '鬥陣燒喊聲，台灣棒球行',
+    2014: '感謝有你',
+    2015: 'Come & Play, Baseball is Life',
+    2016: 'Come & Play, Baseball is Life',
+    2017: 'Come & Play, Baseball is Life',
+    2018: 'Baseball is Life',
+    2019: 'Baseball is Life',
+    2020: 'Baseball is Life',
+    2021: 'United for Baseball',
+    2022: '鬥陣相挺',
+    2023: '躍進',
+    2024: 'Regen再創顛峰',
+    2025: 'New Chapter新篇章',
+    2026: 'Be the one'
+};
+
+const cpblAnnualSloganSource = {
+    label: '中華職棒年度口號',
+    url: 'https://zh.wikipedia.org/zh-tw/中華職棒年度口號'
+};
+

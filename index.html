@@ -98,6 +98,10 @@
                     </nav>
                 </article>
             </dialog>
+            <dialog class="team-profile-dialog game-summary-dialog" id="taiwan-series-dialog" aria-labelledby="taiwan-series-title">
+                <button class="team-profile-close" id="taiwan-series-close" type="button" aria-label="關閉台灣大賽結果">×</button>
+                <article class="team-profile-content" id="taiwan-series-content"></article>
+            </dialog>
             <dialog class="team-profile-dialog" id="season-profile-dialog" aria-labelledby="season-profile-title">
                 <button class="team-profile-close" id="season-profile-close" type="button" aria-label="關閉球隊年度簡介">×</button>
                 <article class="team-profile-content" id="season-profile-content">
@@ -182,31 +186,44 @@
                 </section>
                 </div>
                 <section class="history-page-view match-fixing-history-page" id="match-fixing-history-page" aria-labelledby="match-fixing-history-title" hidden>
-                    <div class="match-fixing-heading">
-                        <div><p class="section-kicker">PROFESSIONAL BASEBALL · INTEGRITY</p><h3 id="match-fixing-history-title">職棒假球事件沿革</h3></div>
-                        <p class="match-fixing-intro">依年份整理職棒假球事件、相關球隊與案件發展。</p>
-                    </div>
-                    <section class="match-fixing-events" aria-labelledby="match-fixing-events-title">
-                        <h4 id="match-fixing-events-title">事件整理</h4>
-                        <p>點擊相關球隊下方的黑色驚嘆號，查看該年度事件資料。</p>
+                    <header class="match-fixing-hero">
+                        <div class="match-fixing-hero-copy">
+                            <p class="match-fixing-kicker"><span>CPBL / SPECIAL REPORT</span><span>棒球史冊・專題 01</span></p>
+                            <p class="match-fixing-overline">當比賽失去公平，球迷失去的是什麼？</p>
+                            <h3 id="match-fixing-history-title">球場之外，<br><em>信任如何失守</em></h3>
+                            <p class="match-fixing-lede">從早期的黑虎疑雲，到 2009 年的黑象事件，簽賭與操控比賽的陰影一次次撼動台灣職棒。這段歷史記錄的不只是案件，也是一個聯盟如何面對失信、修補信任的漫長過程。</p>
+                            <button class="match-fixing-jump" type="button" data-scroll-target="match-fixing-cases">沿著年份回看 <span aria-hidden="true">↓</span></button>
+                        </div>
+                        <div class="match-fixing-hero-art" aria-hidden="true">
+                            <span class="match-fixing-art-label">THE PRICE OF TRUST</span>
+                            <span class="match-fixing-art-year">95<span>—</span>09</span>
+                            <span class="match-fixing-art-stitch"></span>
+                            <span class="match-fixing-art-caption">一場比賽<br>不只是一場比賽</span>
+                        </div>
+                        <div class="match-fixing-hero-footer"><span>1995 — 2009</span><span>六筆收錄紀事</span><span>台灣職棒・誠信紀事</span></div>
+                    </header>
+
+                    <section class="match-fixing-context" aria-label="事件背景">
+                        <div class="match-fixing-context-heading"><p class="section-kicker">WHY THIS HISTORY MATTERS</p><h4>假球案留下的，<br>不只是一張判決書。</h4></div>
+                        <div class="match-fixing-context-copy"><p>球迷走進球場，是相信每一次投球、每一次揮棒都在公平競爭。簽賭與比賽操控的陰影，讓這份相信受到傷害；球隊的更迭與離場，也讓許多人的職棒記憶出現斷裂。</p><p>以下依年份整理常見的事件稱呼與相關球隊，並提供延伸資料。了解事件脈絡，是記住傷痕，也是理解運動誠信為何重要。</p></div>
                     </section>
-                    <div class="match-fixing-team-history">
-                        <div class="match-fixing-team-heading">
-                            <div><p class="section-kicker">TEAM TIMELINE</p><h4>年度參賽球隊</h4></div>
-                            <p>球隊名稱、隊徽與排列沿用職棒沿革。</p>
+
+                    <section class="match-fixing-case-section" id="match-fixing-cases" aria-labelledby="match-fixing-cases-title" tabindex="-1">
+                        <div class="match-fixing-section-heading"><div><p class="section-kicker">THE CASES · 1995—2009</p><h4 id="match-fixing-cases-title">沿著年份，回看六筆紀事</h4></div><p>卡片整理事件脈絡；點擊可閱讀來源 ↗</p></div>
+                        <ol class="match-fixing-case-list" id="match-fixing-case-list" aria-label="職棒假球事件年表"></ol>
+                        <p class="match-fixing-case-note">1995 年「黑虎」多被回顧為早期疑雲；中央社整理的五次大規模假球案則從 1996 年「黑鷹」事件算起。各事件查辦情況不同，「相關球隊」只表示事件脈絡，不代表全隊涉案；個人法律責任以司法判決為準。</p>
+                        <nav class="match-fixing-sources" aria-label="專題延伸閱讀"><span>延伸閱讀</span><a href="https://sports.ltn.com.tw/news/paper/1278869" target="_blank" rel="noopener noreferrer">自由體育・六次假球事件回顧 ↗</a><a href="https://www.cna.com.tw/news/aspt/201903110057.aspx" target="_blank" rel="noopener noreferrer">中央社・職棒黑歷史與球隊影響 ↗</a><a href="https://www.cna.com.tw/news/aspt/202409275002.aspx" target="_blank" rel="noopener noreferrer">中央社・假球案與球迷、票房衝擊 ↗</a><a href="https://cpbl.com.tw/xmdoc/cont?sid=0L132509210082169510" target="_blank" rel="noopener noreferrer">中職官方・2007 年中信鯨事件說明 ↗</a></nav>
+                    </section>
+
+                    <section class="match-fixing-legacy" aria-labelledby="match-fixing-legacy-title">
+                        <div class="match-fixing-legacy-heading"><p class="section-kicker">AFTER THE FINAL OUT</p><h4 id="match-fixing-legacy-title">從信任危機，到防賭制度。</h4></div>
+                        <div class="match-fixing-legacy-grid">
+                            <article><span>01 / 看台</span><h5>球迷信任需要多年重建</h5><p>黑象事件後，中職連續三年場均觀眾未達 3,000 人。票房變化是長期信任受損的結果，不能簡化為單一球隊或球員的責任。</p></article>
+                            <article><span>02 / 球員保障</span><h5>2009 年建立防賭信託</h5><p>職棒球員工會自 2009 年起推動防賭基金信託，結合球員退休保障與防賭宣導；聯盟及球團也持續辦理法治教育。</p></article>
+                            <article><span>03 / 法律防線</span><h5>2024 年明定妨害賽事公平刑責</h5><p>《運動產業發展條例》增訂防賭規定，以暴力、脅迫、詐術、利誘等非法手段妨害賽事公平，可處 1 年以上、7 年以下有期徒刑，並得併科新臺幣 1,000 萬至 3,000 萬元罰金。</p></article>
                         </div>
-                        <div class="editable_content">
-                            <div class="district">
-                                <div class="TeamHistoryTimeLine">
-                                    <div class="timeline_outer">
-                                        <div class="tableWrap">
-                                            <table class="team-history-table"><tbody id="match-fixing-team-history-body"></tbody></table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <nav class="match-fixing-sources" aria-label="防賭制度資料來源"><span>制度資料</span><a href="https://tpbpa.org/%E7%90%83%E5%93%A1%E5%B7%A5%E6%9C%83%E6%A5%AD%E5%8B%99/%E9%98%B2%E8%B3%AD%E4%BF%A1%E8%A8%97%E5%9F%BA%E9%87%91/" target="_blank" rel="noopener noreferrer">中華職棒球員工會・防賭信託基金 ↗</a><a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=H0120056" target="_blank" rel="noopener noreferrer">全國法規資料庫・運動產業發展條例 ↗</a><a href="https://www.sports.gov.tw/News_Content/309/7492" target="_blank" rel="noopener noreferrer">運動部・運產條例修法說明 ↗</a></nav>
+                    </section>
                 </section>
                 <section class="history-page-view championship-stats-page" id="championship-stats-page" aria-labelledby="championship-stats-title" hidden>
                     <div class="stats-heading">
@@ -399,7 +416,7 @@
                     <div class="supplemental-history-heading">
                         <div><p class="section-kicker">AMATEUR BASEBALL TIMELINE</p><h3 id="amateur-baseball-history-title">業餘棒球沿革</h3></div>
                     </div>
-                    <p class="supplemental-history-intro">業餘棒球沿革分為前期（截至 2009 年）與近期（2010 年起）；相同球隊或明確標示的校隊脈絡固定在同一直欄。點選年度旁的「資料」可查看該年來源。</p>
+                    <p class="supplemental-history-intro">業餘棒球沿革分為前期（截至 2009 年）與近期（2010 年起）；相同球隊或明確標示的校隊脈絡固定在同一直欄。點選年度旁的「資料」可查看該年來源，金色獎盃則標記該年度冠軍；點擊獎盃可查看賽事摘要並拋彩帶。</p>
                     <div class="amateur-history-period-control">
                         <label for="amateur-baseball-period-filter">顯示時期</label>
                         <select id="amateur-baseball-period-filter" aria-label="選擇業餘棒球沿革時期">
@@ -534,6 +551,7 @@
     <!-- Data scripts define shared globals; keep them before the UI logic script. -->
     <script src="data/team-appearance.js"></script>
     <script src="data/championship-data.js"></script>
+    <script src="data/taiwan-series-data.js"></script>
     <script src="data/year-archive-data.js"></script>
     <script src="data/challenge-series-data.js"></script>
     <script src="data/international-history-data.js"></script>

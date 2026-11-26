@@ -8,4 +8,4 @@
 - `challenge-series-data.js`：季後挑戰賽勝負。
 - `team-history-data.js`：沿革表各年度參賽球隊。
 - `winter-league-history-data.js`：冬季聯盟沿革、各年度例行賽戰績與總冠軍；沿革繪製器依參賽隊伍與聯隊身分固定直欄，點擊年度可查看戰績。
-- `amateur-baseball-history-data.js`：業餘棒球沿革資料；每筆紀錄可加上相同的 `lane` 或 `track` 值，讓跨年度同一隊伍維持在同一直欄。
+- `amateur-baseball-history-data.js`：業餘棒球沿革與民國 67–89 年冠軍資料；沿革紀錄可加上相同的 `lane` 或 `track` 值，讓跨年度同一隊伍維持在同一直欄。
