@@ -463,9 +463,7 @@ function initializeSeasonProfileDialog() {
         const archiveProfile = getArchiveTeamProfile(year, teamName);
         if (!seasonProfile && !archiveProfile) return;
         const profile = { ...archiveProfile, ...seasonProfile };
-        const isBrotherTeam = /中信兄弟|兄弟象/.test(teamName);
-        const isLionsTeam = isUnitedLionsTeamName(teamName);
-        const hasAnnualFocus = Boolean(profile.annualFocus && (isBrotherTeam || isLionsTeam));
+        const hasAnnualFocus = Boolean(profile.annualFocus);
 
         content.replaceChildren();
         const kicker = document.createElement('p');
@@ -473,7 +471,7 @@ function initializeSeasonProfileDialog() {
         kicker.textContent = `SEASON ARCHIVE · ${year}`;
         const seasonLine = document.createElement('p');
         seasonLine.className = 'team-profile-season';
-        seasonLine.textContent = `中華職棒 ${year - 1989} 年｜${getTeamDisplayName(teamName)}`;
+        seasonLine.textContent = profile.seasonLabel || `中華職棒 ${year - 1989} 年｜${getTeamDisplayName(teamName)}`;
         if (profile.slogan) {
             const sloganLine = document.createElement('span');
             sloganLine.className = 'team-profile-slogan';
@@ -493,7 +491,7 @@ function initializeSeasonProfileDialog() {
             ['例行賽戰績', profile.record],
             ['全年排名', profile.rank],
             [hasAnnualFocus ? '年度焦點' : '球季成果', hasAnnualFocus ? profile.annualFocus : profile.distinction]
-        ].forEach(([label, value]) => {
+        ].filter(([, value]) => value !== undefined && value !== null && value !== '').forEach(([label, value]) => {
             const fact = document.createElement('div');
             const strong = document.createElement('strong');
             strong.textContent = value;

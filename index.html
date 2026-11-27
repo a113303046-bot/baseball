@@ -19,6 +19,7 @@
                 </div>
                 <div class="header-actions">
                     <button class="auth-open-button" id="auth-open-button" type="button" aria-haspopup="dialog" aria-controls="auth-dialog">會員登入</button>
+                    <button class="auth-open-button ai-assistant-open-button" id="ai-assistant-open-button" type="button" aria-haspopup="dialog" aria-controls="ai-assistant-dialog" hidden>棒球 AI 助手</button>
                     <div class="baseball-mark" aria-hidden="true"><span></span></div>
                 </div>
             </header>
@@ -38,26 +39,48 @@
                 <p id="auth-user" class="auth-user" hidden></p>
                 </section>
             </dialog>
+            <dialog class="team-profile-dialog ai-assistant-dialog" id="ai-assistant-dialog" aria-labelledby="ai-assistant-title">
+                <button class="team-profile-close" id="ai-assistant-close-button" type="button" aria-label="關閉棒球 AI 助手">×</button>
+                <section class="ai-assistant-shell">
+                    <header class="ai-assistant-heading">
+                        <p class="section-kicker">AI BASEBALL ASSISTANT</p>
+                        <h3 id="ai-assistant-title">棒球史冊 AI 助手</h3>
+                        <p>可詢問中職沿革、冠軍紀錄，以及目前頁面顯示的資料。</p>
+                    </header>
+                    <div class="ai-chat-messages" id="ai-chat-messages" role="log" aria-live="polite" aria-relevant="additions text">
+                        <article class="ai-chat-message ai-chat-message-assistant"><p>你好！我可以根據棒球史冊目前顯示的資料，協助整理球隊沿革與賽事紀錄。</p></article>
+                    </div>
+                    <div class="ai-chat-suggestions" aria-label="建議問題">
+                        <button type="button" data-ai-prompt="整理中信兄弟 2020 年球季的重點紀錄。">中信兄弟 2020 球季</button>
+                        <button type="button" data-ai-prompt="目前頁面有哪些年度冠軍紀錄？">年度冠軍紀錄</button>
+                    </div>
+                    <p class="ai-assistant-status" id="ai-assistant-status" role="status" aria-live="polite">正在準備 AI 助手……</p>
+                    <form class="ai-chat-form" id="ai-chat-form">
+                        <label class="visually-hidden" for="ai-chat-input">輸入棒球問題</label>
+                        <textarea id="ai-chat-input" rows="2" maxlength="1500" placeholder="輸入你想了解的棒球問題" required></textarea>
+                        <button id="ai-chat-send-button" type="submit" disabled>送出</button>
+                    </form>
+                    <p class="ai-assistant-disclosure">提問與目前頁面顯示的棒球資料會傳送至 Firebase AI Logic / Gemini 產生回答；請勿輸入個人或敏感資料。</p>
+                </section>
+            </dialog>
             <dialog class="team-profile-dialog" id="team-profile-dialog" aria-labelledby="team-profile-title">
                 <button class="team-profile-close" id="team-profile-close" type="button" aria-label="關閉球隊介紹">×</button>
                 <article class="team-profile-content">
                     <p class="section-kicker">SEASON ARCHIVE · 2020</p>
-                    <p class="team-profile-season">中華職棒 31 年</p>
-                    <h3 id="team-profile-title">中信兄弟｜CHASE</h3>
-                    <p class="team-profile-summary">丘昌榮接任總教練並強化本土打線，順利奪下上半季冠軍；卻在總冠軍賽3勝1敗聽牌下遭統一獅逆轉，苦吞「七年六亞」。</p>
+                    <p class="team-profile-season">中華職棒 31 年｜中信兄弟｜CHASE</p>
+                    <h3 id="team-profile-title">「七年六亞」魔咒延續，兄弟聽牌後遭統一逆轉</h3>
+                    <p class="team-profile-summary">中信兄弟在臺灣大賽一度以 3 勝 1 敗聽牌，卻連吞三敗遭統一獅逆轉，七年間第六度在總冠軍賽屈居亞軍，延續球迷所稱的「七年六亞」魔咒。例行賽的代表一戰則是 7 月 1 日單場六轟、五支三分砲，以 20：0 擊敗樂天桃猿。</p>
                     <div class="team-profile-facts" aria-label="2020 球季摘要">
-                        <div><strong>67 勝・51 敗・2 和</strong><span>例行賽戰績｜勝率 .568｜全年第一</span></div>
-                        <div><strong>上半季冠軍</strong><span>隊史第 16 座季冠軍</span></div>
-                        <div><strong>臺灣大賽 3 勝 4 敗</strong><span>第七戰以 4：7 不敵統一獅</span></div>
+                        <div><strong>67 勝・51 敗・2 和</strong><span>例行賽戰績</span></div>
+                        <div><strong>全年第 1 名</strong><span>全年排名</span></div>
+                        <div><strong>臺灣大賽 3 勝 1 敗聽牌後遭逆轉</strong><span>年度焦點｜延續「七年六亞」</span></div>
                     </div>
                     <section class="team-profile-highlights" aria-labelledby="team-profile-highlights-title">
                         <h4 id="team-profile-highlights-title">球季重點</h4>
                         <ul>
-                            <li>因疫情延後開季，4 月 12 日在臺中洲際迎來主場開幕，也成為中職 31 年首場正式開打的例行賽。</li>
-                            <li>7 月 14 日續打 5 月 26 日的保留比賽，德保拉完投九局僅失一分，率隊以 6：1 擊敗統一獅，拿下上半季冠軍。</li>
-                            <li>7 月 1 日以 20：0 大勝樂天桃猿，單場五支三分砲改寫聯盟紀錄。</li>
-                            <li>德保拉獲年度 MVP，並拿下勝投、防禦率、三振三項投手個人獎。</li>
-                            <li>周思齊於 7 月 31 日達成個人生涯 1,600 安；球隊於 5 月 14 日締造隊史 30,000 安里程碑。</li>
+                            <li>臺灣大賽兄弟先取得 3 勝 1 敗聽牌，隨後遭統一獅連追三勝逆轉。</li>
+                            <li>兄弟最終以 3 勝 4 敗落敗，七年間第六度打進總冠軍賽、也第六度屈居亞軍。</li>
+                            <li>例行賽單場六轟、五支三分砲，以 20：0 大勝樂天；單局四轟平紀錄，江國謙單局被敲四轟創紀錄。</li>
                         </ul>
                     </section>
                     <nav class="team-profile-sources" aria-label="資料來源">
@@ -446,8 +469,10 @@
             storageBucket: "project-8285027657505595761.firebasestorage.app",
             messagingSenderId: "343594574297",
             appId: "1:343594574297:web:e122956794aa9b1dae79c8",
-            measurementId: "G-V1FQ5Q79G6"
+            measurementId: "G-V1FQ5Q79G6",
+            recaptchaSiteKey: ""
         };
+        window.firebaseConfig = firebaseConfig;
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const status = document.getElementById('auth-status');
@@ -461,6 +486,8 @@
         const authPanel = document.querySelector('.auth-panel');
         const authTitle = document.getElementById('auth-title');
         const authPrompt = document.getElementById('auth-prompt');
+        const aiAssistantOpenButton = document.getElementById('ai-assistant-open-button');
+        const aiAssistantDialog = document.getElementById('ai-assistant-dialog');
         const historySection = document.getElementById('team-history');
         const breadcrumbs = document.getElementById('Breadcrumbs');
         const pageTitle = document.getElementById('page-title');
@@ -523,6 +550,8 @@
             const signedIn = Boolean(user);
             historySection.hidden = !signedIn;
             breadcrumbs.hidden = !signedIn;
+            aiAssistantOpenButton.hidden = !signedIn;
+            if (!signedIn && aiAssistantDialog.open) aiAssistantDialog.close();
             authPanel.classList.toggle('is-signed-in', signedIn);
             userDisplay.hidden = !signedIn;
             signoutButton.hidden = !signedIn;
@@ -570,5 +599,6 @@
     <script src="js/draft-history.js"></script>
     <script src="js/championship-admin.js"></script>
     <script src="script.js"></script>
+    <script type="module" src="js/ai-assistant.js"></script>
 </body>
 </html>

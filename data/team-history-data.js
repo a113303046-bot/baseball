@@ -77,7 +77,7 @@ const teamHistoryData = [
             { name: '味全龍', color: '#ffebec', hasTeamName: false },
             { name: 'Rakuten Monkeys', color: '#d1e4ec', hasTeamName: false },
             null, // 空列
-            null, // 空列
+            { name: '台鋼雄鷹', color: '#c1ffe4', hasTeamName: false },
             null, // 空列
             null, // 空列
             null, // 空列
